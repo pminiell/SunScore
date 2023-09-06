@@ -3,9 +3,11 @@ import type { FindReportQuery, FindReportQueryVariables } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 export const QUERY = gql`
-  query FindReportQuery($id: Int!) {
-    report: report(id: $id) {
-      id
+  query GetIrradianceQuery($lat: Int!, $lon: Int!) {
+    irradiance: getIrradiance(lat: $lat, lon: $lon) {
+      annualDni
+      annualGhi
+      annualTilt
     }
   }
 `
@@ -20,7 +22,13 @@ export const Failure = ({
 )
 
 export const Success = ({
-  report,
+  irradiance,
 }: CellSuccessProps<FindReportQuery, FindReportQueryVariables>) => {
-  return <div>{JSON.stringify(report)}</div>
+  return (
+    <div>
+      <h1>Annual Dni: {irradiance.annualDni}</h1>
+      <h1>Annual Ghi: {irradiance.annualGhi}</h1>
+      <h1>Annual Tilt: {irradiance.annualTilt}</h1>
+    </div>
+  )
 }
