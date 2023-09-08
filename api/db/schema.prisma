@@ -16,3 +16,15 @@ model User {
   resetToken          String?
   resetTokenExpiresAt DateTime?
 }
+
+model Asset {
+  id          Int    @id @default(autoincrement())
+  assetName   String
+  address     String
+  axisTracker String
+  hemisphere  String
+  panelTilt   Int
+  panelType   String
+  totalDc     Float
+  totalAc     Float
+}

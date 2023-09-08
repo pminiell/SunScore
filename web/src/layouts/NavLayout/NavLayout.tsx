@@ -25,9 +25,9 @@ const NavLayout = ({ children }: NavLayoutProps) => {
             <li>
               <Link
                 className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                to={routes.home()}
+                to={routes.assets()}
               >
-                About
+                Assets
               </Link>
             </li>
             <li>

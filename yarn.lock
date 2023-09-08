@@ -20887,6 +20887,7 @@ __metadata:
     "@redwoodjs/vite": 6.1.1
     "@redwoodjs/web": 6.1.1
     autoprefixer: ^10.4.15
+    humanize-string: 2.1.0
     postcss: ^8.4.29
     postcss-loader: ^7.3.3
     prop-types: 15.8.1
