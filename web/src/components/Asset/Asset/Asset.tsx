@@ -1,10 +1,10 @@
+import type { DeleteAssetMutationVariables, FindAssetById } from 'types/graphql'
+
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import {} from 'src/lib/formatters'
-
-import type { DeleteAssetMutationVariables, FindAssetById } from 'types/graphql'
 
 const DELETE_ASSET_MUTATION = gql`
   mutation DeleteAssetMutation($id: Int!) {

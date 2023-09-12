@@ -39,5 +39,15 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ assets }: CellSuccessProps<FindAssets>) => {
-  return <Assets assets={assets} />
+  return (
+    <>
+      <header className="rw-header">
+        <h1 className="rw-heading rw-heading-primary">Assets</h1>
+        <Link to={routes.newAsset()} className="rw-button rw-button-green">
+          <div className="rw-button-icon">+</div>
+        </Link>
+      </header>
+      <Assets assets={assets} />
+    </>
+  )
 }

@@ -11,10 +11,10 @@ const NavLayout = ({ children }: NavLayoutProps) => {
 
   return (
     <>
-      <header className="relative flex justify-between items-center py-4 px-8 bg-blue-700 text-white">
+      <header className="relative flex items-center justify-between bg-blue-700 px-8 py-4 text-white">
         <h1 className="text-5xl font-semibold tracking-tight">
           <Link
-            className="text-blue-400 hover:text-blue-100 transition duration-100"
+            className="text-blue-400 transition duration-100 hover:text-blue-100"
             to={routes.home()}
           >
             SunScore
@@ -24,7 +24,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
           <ul className="relative flex items-center font-light">
             <li>
               <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
+                className="rounded px-4 py-2 transition duration-100 hover:bg-blue-600"
                 to={routes.assets()}
               >
                 Assets
@@ -32,7 +32,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
             </li>
             <li>
               <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
+                className="rounded px-4 py-2 transition duration-100 hover:bg-blue-600"
                 to={routes.home()}
               >
                 Contact
@@ -41,12 +41,12 @@ const NavLayout = ({ children }: NavLayoutProps) => {
             <li>
               {isAuthenticated ? (
                 <div>
-                  <button type="button" onClick={logOut} className="py-2 px-4">
+                  <button type="button" onClick={logOut} className="px-4 py-2">
                     Logout
                   </button>
                 </div>
               ) : (
-                <Link to={routes.login()} className="py-2 px-4">
+                <Link to={routes.login()} className="px-4 py-2">
                   Login
                 </Link>
               )}
@@ -59,7 +59,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
           )}
         </nav>
       </header>
-      <main className="max-w-4xl mx-auto p-12 bg-white shadow rounded-b">
+      <main className="mx-auto max-w-4xl rounded-b bg-white p-12 shadow">
         {children}
       </main>
     </>
