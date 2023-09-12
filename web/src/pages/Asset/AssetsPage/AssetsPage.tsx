@@ -1,7 +1,11 @@
-import AssetsCell from 'src/components/Asset/AssetsCell'
+import AssetCell from 'src/components/Asset/AssetsCell'
 
 const AssetsPage = () => {
-  return <AssetsCell />
+  return (
+    <>
+      <AssetCell />
+    </>
+  )
 }
 
 export default AssetsPage
