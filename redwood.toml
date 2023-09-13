@@ -9,7 +9,7 @@
   title = "SunScore"
   port = 8910
   apiUrl = "/.redwood/functions" # You can customize graphql and dbauth urls individually too: see https://redwoodjs.com/docs/app-configuration-redwood-toml#api-paths
-  includeEnvironmentVariables = ['SESSION_SECRET', 'NREL_API_KEY']
+  includeEnvironmentVariables = ['SESSION_SECRET', 'NREL_API_KEY', 'GOOGLE_API_KEY']
 [api]
   port = 8911
 [browser]

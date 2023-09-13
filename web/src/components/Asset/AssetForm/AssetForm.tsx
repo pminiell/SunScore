@@ -1,3 +1,4 @@
+import { fetch } from '@whatwg-node/fetch'
 import type { EditAssetById, UpdateAssetInput } from 'types/graphql'
 
 import {
@@ -11,6 +12,33 @@ import {
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
+interface GeocodeResponse {
+  results: {
+    geometry: {
+      location: {
+        lat: number
+        lng: number
+      }
+    }
+  }[]
+}
+
+export const getLatLngFromAddress = async (
+  address: string
+): Promise<[number, number]> => {
+  const response = await fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${process.env.GOOGLE_API_KEY}`
+  )
+
+  const data: GeocodeResponse = await response.json()
+
+  const { lat, lng } = data.results[0].geometry.location
+
+  return [lat, lng]
+}
+
 type FormAsset = NonNullable<EditAssetById['asset']>
 
 interface AssetFormProps {
@@ -21,7 +49,10 @@ interface AssetFormProps {
 }
 
 const AssetForm = (props: AssetFormProps) => {
-  const onSubmit = (data: FormAsset) => {
+  const onSubmit = async (data: FormAsset) => {
+    const [lat, lon] = await getLatLngFromAddress(data.address)
+    data.lat = lat
+    data.lon = lon
     props.onSave(data, props?.asset?.id)
   }
 

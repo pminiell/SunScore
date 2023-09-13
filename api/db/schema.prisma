@@ -27,4 +27,6 @@ model Asset {
   panelType   String
   totalDc     Float
   totalAc     Float
+  lat         Float
+  lon         Float
 }

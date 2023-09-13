@@ -9,6 +9,8 @@ export const schema = gql`
     panelType: String!
     totalDc: Float!
     totalAc: Float!
+    lat: Float!
+    lon: Float!
   }
 
   type Query {
@@ -25,6 +27,8 @@ export const schema = gql`
     panelType: String!
     totalDc: Float!
     totalAc: Float!
+    lat: Float!
+    lon: Float!
   }
 
   input UpdateAssetInput {
@@ -36,6 +40,8 @@ export const schema = gql`
     panelType: String
     totalDc: Float
     totalAc: Float
+    lat: Float!
+    lon: Float!
   }
 
   type Mutation {
