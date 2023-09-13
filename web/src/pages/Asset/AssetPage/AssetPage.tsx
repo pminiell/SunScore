@@ -6,10 +6,10 @@ type AssetPageProps = {
   lon: number
 }
 
-const AssetPage = ({ id }: AssetPageProps) => {
+const AssetPage = ({ id, lat, lon }: AssetPageProps) => {
   return (
     <>
-      <AssetCell id={id} />
+      <AssetCell id={id} lat={lat} lon={lon} />
     </>
   )
 }

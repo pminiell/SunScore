@@ -1,10 +1,10 @@
 export const schema = gql`
   type Irradiance {
     annualDni: Float
-    annualGhi: Float!
-    annualTilt: Float!
+    annualGhi: Float
+    annualTilt: Float
   }
   type Query {
-    getIrradiance(lat: Int!, lon: Int!): Irradiance! @skipAuth
+    getIrradiance(lat: Float!, lon: Float!): Irradiance! @skipAuth
   }
 `

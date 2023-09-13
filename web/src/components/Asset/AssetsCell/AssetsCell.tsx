@@ -17,6 +17,8 @@ export const QUERY = gql`
       panelType
       totalDc
       totalAc
+      lat
+      lon
     }
   }
 `

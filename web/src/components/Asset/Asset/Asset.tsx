@@ -35,6 +35,14 @@ const Asset = ({ asset }: Props) => {
     }
   }
 
+  console.log(
+    'Asset Cell',
+    typeof asset.lon,
+    asset.lon,
+    typeof asset.lat,
+    asset.lat
+  )
+
   return (
     <>
       <div className="rw-segment">
@@ -99,7 +107,12 @@ const Asset = ({ asset }: Props) => {
           Delete
         </button>
         <Link
-          to={routes.assetReport({ id: asset.id })}
+          to={routes.assetReport({
+            id: asset.id,
+            assetName: asset.assetName,
+            lat: asset.lat,
+            lon: asset.lon,
+          })}
           className="rw-button rw-button-blue"
         >
           View Report

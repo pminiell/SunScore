@@ -1,8 +1,6 @@
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
-import ReportCell from 'src/components/ReportCell'
-
 const HomePage = () => {
   return (
     <>
