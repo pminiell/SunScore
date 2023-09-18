@@ -1,4 +1,5 @@
 import type { Prisma, Asset } from '@prisma/client'
+
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.AssetCreateArgs>({
@@ -13,6 +14,8 @@ export const standard = defineScenario<Prisma.AssetCreateArgs>({
         panelType: 'String',
         totalDc: 1066420.7890685007,
         totalAc: 4873491.200967019,
+        lat: -40,
+        lon: 100,
       },
     },
     two: {
@@ -25,6 +28,8 @@ export const standard = defineScenario<Prisma.AssetCreateArgs>({
         panelType: 'String',
         totalDc: 8291144.162223633,
         totalAc: 1623963.1048734714,
+        lat: -40,
+        lon: 100,
       },
     },
   },

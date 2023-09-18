@@ -33,6 +33,8 @@ describe('assets', () => {
         panelType: 'String',
         totalDc: 3730765.4037184236,
         totalAc: 4483186.638325414,
+        lat: -40,
+        lon: 100,
       },
     })
 
@@ -44,6 +46,8 @@ describe('assets', () => {
     expect(result.panelType).toEqual('String')
     expect(result.totalDc).toEqual(3730765.4037184236)
     expect(result.totalAc).toEqual(4483186.638325414)
+    expect(result.lat).toEqual(-40)
+    expect(result.lon).toEqual(100)
   })
 
   scenario('updates a asset', async (scenario: StandardScenario) => {

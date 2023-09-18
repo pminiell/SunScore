@@ -17,18 +17,22 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ irradiance }) => {
-  if (!irradiance.annualDni) {
-    console.log(irradiance)
+type Report = {
+  id: number
+  annualDni: number
+  annualGhi: number
+  annualTilt: number
+}
+
+export const Success = ({ report }: { report: Report }) => {
+  if (!report) {
     return <Empty />
   }
-
-  console.log(irradiance)
   return (
     <div>
-      <h1>Annual Dni: {irradiance.annualDni}</h1>
-      <h1>Annual Ghi: {irradiance.annualGhi}</h1>
-      <h1>Annual Tilt: {irradiance.annualTilt}</h1>
+      <h1>Annual Dni: {report.annualDni}</h1>
+      <h1>Annual Ghi: {report.annualGhi}</h1>
+      <h1>Annual Tilt: {report.annualTilt}</h1>
     </div>
   )
 }

@@ -40,8 +40,8 @@ export const schema = gql`
     panelType: String
     totalDc: Float
     totalAc: Float
-    lat: Float!
-    lon: Float!
+    lat: Float
+    lon: Float
   }
 
   type Mutation {
