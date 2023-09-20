@@ -24,7 +24,7 @@ export const getPvWattData = async ({
     `https://developer.nrel.gov/api/pvwatts/v8.json?parameters&api_key=${process.env.NREL_API_KEY}&lat=${lat}&lon=${lon}&azimuth=${azimuth}&system_capacity=${systemCapacity}&losses=${systemLosses}&array_type=${arrayType}&module_type=${moduleType}&tilt=${panelTilt}`
   )
   const json = await response.json()
-  console.log(json)
+  console.log('PVWATT', json)
 
   return {
     ac_monthly: json.outputs.ac_monthly,

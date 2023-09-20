@@ -1,9 +1,9 @@
 export const schema = gql`
   type PvWatt {
-    ac_monthly: JSONObject
-    poa_monthly: JSONObject
-    solrad_monthly: JSONObject
-    dc_monthly: JSONObject
+    ac_monthly: [Float]
+    poa_monthly: [Float]
+    solrad_monthly: [Float]
+    dc_monthly: [Float]
     ac_annual: Float
     solrad_annual: Float
     capacity_factor: Float

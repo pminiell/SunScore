@@ -1,4 +1,4 @@
-import Report from 'src/components/Report/Report'
+import IrradianceReport from '../Reports/IrradianceReport/IrradianceReport'
 
 export const QUERY = gql`
   query GetIrradianceQuery($lat: Float!, $lon: Float!) {
@@ -46,5 +46,5 @@ export const Success = ({ irradiance }: { irradiance: Irradiance }) => {
     return <Empty />
   }
 
-  return <Report irradiance={irradiance} />
+  return <IrradianceReport irradiance={irradiance} />
 }

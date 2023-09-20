@@ -1,6 +1,7 @@
 import { render } from '@redwoodjs/testing/web'
 
-import Report from './Report'
+import IrradianceReport from './IrradianceReport'
+import { standard } from './IrradianceReport.mock'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +9,7 @@ import Report from './Report'
 describe('Report', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Report />)
+      render(<IrradianceReport irradiance={standard().irradiance} />)
     }).not.toThrow()
   })
 })
