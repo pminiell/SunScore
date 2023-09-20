@@ -1,16 +1,17 @@
 export const schema = gql`
   type Asset {
     id: Int!
+    userId: Int
     assetName: String!
+    systemCapacity: Float!
+    moduleType: Int!
+    systemLosses: Float!
+    arrayType: Int!
+    panelTilt: Float!
     address: String!
-    axisTracker: String!
-    hemisphere: String!
-    panelTilt: Int!
-    panelType: String!
-    totalDc: Float!
-    totalAc: Float!
     lat: Float!
     lon: Float!
+    azimuth: Float!
   }
 
   type Query {
@@ -19,29 +20,30 @@ export const schema = gql`
   }
 
   input CreateAssetInput {
+    userId: Int!
     assetName: String!
+    systemCapacity: Float!
+    moduleType: Int!
+    systemLosses: Float!
+    arrayType: Int!
+    panelTilt: Float!
     address: String!
-    axisTracker: String!
-    hemisphere: String!
-    panelTilt: Int!
-    panelType: String!
-    totalDc: Float!
-    totalAc: Float!
     lat: Float!
     lon: Float!
+    azimuth: Float!
   }
 
   input UpdateAssetInput {
-    assetName: String
-    address: String
-    axisTracker: String
-    hemisphere: String
-    panelTilt: Int
-    panelType: String
-    totalDc: Float
-    totalAc: Float
-    lat: Float
-    lon: Float
+    assetName: String!
+    systemCapacity: Float!
+    moduleType: Int!
+    systemLosses: Float!
+    arrayType: Int!
+    panelTilt: Float!
+    address: String!
+    lat: Float!
+    lon: Float!
+    azimuth: Float!
   }
 
   type Mutation {

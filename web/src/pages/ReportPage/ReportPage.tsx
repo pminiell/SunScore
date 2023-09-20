@@ -4,17 +4,18 @@ import { MetaTags } from '@redwoodjs/web'
 import ReportCell from 'src/components/ReportCell'
 
 const ReportPage = () => {
-  const { id, assetName, lat, lon } = useParams()
+  const { assetName, lat, lon, address } = useParams()
 
   return (
     <>
       <MetaTags title="Report" description="Report page" />
 
-      <h1>ReportPage</h1>
-      <p>
-        generated report for asset {id}: {assetName}
-      </p>
-      <ReportCell lat={parseFloat(lat)} lon={parseFloat(lon)} />
+      <section className="space-y-2">
+        <h1 className="text-xl font-bold text-zinc-800">Report Page</h1>
+        <p className="text-zinc-600">Report for Asset : {assetName}</p>
+        <h1 className="text-zinc-600">Address: {address}</h1>
+        <ReportCell lat={parseFloat(lat)} lon={parseFloat(lon)} />
+      </section>
     </>
   )
 }

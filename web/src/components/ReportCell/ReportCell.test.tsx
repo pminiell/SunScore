@@ -36,7 +36,7 @@ describe('ReportCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success report={standard().report} />)
+      render(<Success irradiance={standard().irradiance} />)
     }).not.toThrow()
   })
 })

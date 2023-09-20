@@ -8,14 +8,15 @@ export const QUERY = gql`
   query FindAssetById($id: Int!) {
     asset: asset(id: $id) {
       id
+      userId
       assetName
-      address
-      axisTracker
-      hemisphere
+      systemCapacity
+      moduleType
+      systemLosses
+      arrayType
       panelTilt
-      panelType
-      totalDc
-      totalAc
+      address
+      azimuth
       lat
       lon
     }

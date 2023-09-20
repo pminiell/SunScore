@@ -11,14 +11,15 @@ export const QUERY = gql`
   query EditAssetById($id: Int!) {
     asset: asset(id: $id) {
       id
+      userId
       assetName
-      address
-      axisTracker
-      hemisphere
+      systemCapacity
+      moduleType
+      systemLosses
+      arrayType
       panelTilt
-      panelType
-      totalDc
-      totalAc
+      address
+      azimuth
     }
   }
 `
@@ -26,14 +27,15 @@ const UPDATE_ASSET_MUTATION = gql`
   mutation UpdateAssetMutation($id: Int!, $input: UpdateAssetInput!) {
     updateAsset(id: $id, input: $input) {
       id
+      userId
       assetName
-      address
-      axisTracker
-      hemisphere
+      systemCapacity
+      moduleType
+      systemLosses
+      arrayType
       panelTilt
-      panelType
-      totalDc
-      totalAc
+      address
+      azimuth
     }
   }
 `

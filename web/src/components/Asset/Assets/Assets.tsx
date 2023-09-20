@@ -6,14 +6,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Asset/AssetsCell'
 import { truncate } from 'src/lib/formatters'
-
-const DELETE_ASSET_MUTATION = gql`
-  mutation DeleteAssetMutation($id: Int!) {
-    deleteAsset(id: $id) {
-      id
-    }
-  }
-`
+import { DELETE_ASSET_MUTATION } from 'src/utils/DeleteAssetMutation'
 
 const AssetsList = ({ assets }: FindAssets) => {
   const [deleteAsset] = useMutation(DELETE_ASSET_MUTATION, {
@@ -45,11 +38,11 @@ const AssetsList = ({ assets }: FindAssets) => {
             <th>Asset name</th>
             <th>Address</th>
             <th>Axis tracker</th>
-            <th>Hemisphere</th>
-            <th>Panel tilt</th>
-            <th>Panel type</th>
-            <th>Total dc</th>
-            <th>Total ac</th>
+            <th>System Capacity</th>
+            <th>System Losses</th>
+            <th>Panel Tilt</th>
+            <th>Module</th>
+            <th>Azimuth</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -59,12 +52,12 @@ const AssetsList = ({ assets }: FindAssets) => {
               <td>{truncate(asset.id)}</td>
               <td>{truncate(asset.assetName)}</td>
               <td>{truncate(asset.address)}</td>
-              <td>{truncate(asset.axisTracker)}</td>
-              <td>{truncate(asset.hemisphere)}</td>
+              <td>{truncate(asset.arrayType)}</td>
+              <td>{truncate(asset.systemCapacity)}</td>
+              <td>{truncate(asset.systemLosses)}</td>
               <td>{truncate(asset.panelTilt)}</td>
-              <td>{truncate(asset.panelType)}</td>
-              <td>{truncate(asset.totalDc)}</td>
-              <td>{truncate(asset.totalAc)}</td>
+              <td>{truncate(asset.moduleType)}</td>
+              <td>{truncate(asset.azimuth)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link

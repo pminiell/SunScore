@@ -4,15 +4,9 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import {} from 'src/lib/formatters'
+import { DELETE_ASSET_MUTATION } from 'src/utils/DeleteAssetMutation'
 
-const DELETE_ASSET_MUTATION = gql`
-  mutation DeleteAssetMutation($id: Int!) {
-    deleteAsset(id: $id) {
-      id
-    }
-  }
-`
+import {} from 'src/lib/formatters'
 
 interface Props {
   asset: NonNullable<FindAssetById['asset']>
@@ -35,20 +29,12 @@ const Asset = ({ asset }: Props) => {
     }
   }
 
-  console.log(
-    'Asset Cell',
-    typeof asset.lon,
-    asset.lon,
-    typeof asset.lat,
-    asset.lat
-  )
-
   return (
     <>
       <div className="rw-segment">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Asset {asset.id} Detail
+            Asset {asset.id} Details
           </h2>
         </header>
         <table className="rw-table">
@@ -66,28 +52,28 @@ const Asset = ({ asset }: Props) => {
               <td>{asset.address}</td>
             </tr>
             <tr>
-              <th>Axis tracker</th>
-              <td>{asset.axisTracker}</td>
+              <th>Axis Tracker</th>
+              <td>{asset.arrayType}</td>
             </tr>
             <tr>
-              <th>Hemisphere</th>
-              <td>{asset.hemisphere}</td>
+              <th>System Capacity</th>
+              <td>{asset.systemCapacity}</td>
             </tr>
             <tr>
-              <th>Panel tilt</th>
+              <th>System Losses</th>
+              <td>{asset.systemLosses}</td>
+            </tr>
+            <tr>
+              <th>Panel Tilt</th>
               <td>{asset.panelTilt}</td>
             </tr>
             <tr>
-              <th>Panel type</th>
-              <td>{asset.panelType}</td>
+              <th>Module</th>
+              <td>{asset.moduleType}</td>
             </tr>
             <tr>
-              <th>Total dc</th>
-              <td>{asset.totalDc}</td>
-            </tr>
-            <tr>
-              <th>Total ac</th>
-              <td>{asset.totalAc}</td>
+              <th>Azimuth</th>
+              <td>{asset.azimuth}</td>
             </tr>
           </tbody>
         </table>
@@ -112,6 +98,7 @@ const Asset = ({ asset }: Props) => {
             assetName: asset.assetName,
             lat: asset.lat,
             lon: asset.lon,
+            address: asset.address,
           })}
           className="rw-button rw-button-blue"
         >

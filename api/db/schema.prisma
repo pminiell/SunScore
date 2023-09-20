@@ -18,15 +18,16 @@ model User {
 }
 
 model Asset {
-  id          Int    @id @default(autoincrement())
-  assetName   String
-  address     String
-  axisTracker String
-  hemisphere  String
-  panelTilt   Int
-  panelType   String
-  totalDc     Float
-  totalAc     Float
-  lat         Float
-  lon         Float
+  id             Int    @id @default(autoincrement())
+  userId         Int
+  assetName      String
+  systemCapacity Float
+  moduleType     Int
+  systemLosses   Float
+  arrayType      Int
+  panelTilt      Float
+  address        String
+  lat            Float
+  lon            Float
+  azimuth        Float
 }

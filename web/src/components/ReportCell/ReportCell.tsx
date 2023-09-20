@@ -1,9 +1,14 @@
+import Report from 'src/components/Report/Report'
+
 export const QUERY = gql`
   query GetIrradianceQuery($lat: Float!, $lon: Float!) {
     irradiance: getIrradiance(lat: $lat, lon: $lon) {
       annualDni
       annualGhi
       annualTilt
+      monthlyDni
+      monthlyGhi
+      monthlyTilt
     }
   }
 `
@@ -17,22 +22,29 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-type Report = {
-  id: number
+type MonthlyData = {
+  month: string
+  value: number
+}
+
+type Irradiance = {
   annualDni: number
   annualGhi: number
   annualTilt: number
+  monthlyDni: MonthlyData[]
+  monthlyGhi: MonthlyData[]
+  monthlyTilt: MonthlyData[]
 }
 
-export const Success = ({ report }: { report: Report }) => {
-  if (!report) {
+export const Success = ({ irradiance }: { irradiance: Irradiance }) => {
+  if (
+    !irradiance.annualDni &&
+    !irradiance.annualGhi &&
+    !irradiance.annualTilt
+  ) {
+    console.log('irradiance', irradiance)
     return <Empty />
   }
-  return (
-    <div>
-      <h1>Annual Dni: {report.annualDni}</h1>
-      <h1>Annual Ghi: {report.annualGhi}</h1>
-      <h1>Annual Tilt: {report.annualTilt}</h1>
-    </div>
-  )
+
+  return <Report irradiance={irradiance} />
 }

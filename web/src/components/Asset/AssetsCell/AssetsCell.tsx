@@ -9,16 +9,17 @@ export const QUERY = gql`
   query FindAssets {
     assets {
       id
+      userId
       assetName
-      address
-      axisTracker
-      hemisphere
+      systemCapacity
+      moduleType
+      systemLosses
+      arrayType
       panelTilt
-      panelType
-      totalDc
-      totalAc
+      address
       lat
       lon
+      azimuth
     }
   }
 `

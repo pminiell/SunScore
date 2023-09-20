@@ -41,6 +41,11 @@ export const getLatLngFromAddress = async (
 
 type FormAsset = NonNullable<EditAssetById['asset']>
 
+interface FormAssetWithLatLng extends FormAsset {
+  lat: number
+  lon: number
+}
+
 interface AssetFormProps {
   asset?: EditAssetById['asset']
   onSave: (data: UpdateAssetInput, id?: FormAsset['id']) => void
@@ -49,10 +54,11 @@ interface AssetFormProps {
 }
 
 const AssetForm = (props: AssetFormProps) => {
-  const onSubmit = async (data: FormAsset) => {
+  const onSubmit = async (data: FormAssetWithLatLng) => {
     const [lat, lon] = await getLatLngFromAddress(data.address)
     data.lat = lat
     data.lon = lon
+    data.userId = 1
     props.onSave(data, props?.asset?.id)
   }
 
@@ -103,47 +109,83 @@ const AssetForm = (props: AssetFormProps) => {
         <FieldError name="address" className="rw-field-error" />
 
         <Label
-          name="axisTracker"
+          name="systemCapacity"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Axis tracker
+          System Capacity
         </Label>
 
-        <TextField
-          name="axisTracker"
-          defaultValue={props.asset?.axisTracker}
+        <NumberField
+          name="systemCapacity"
+          defaultValue={props.asset?.systemCapacity}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
           validation={{ required: true }}
         />
 
-        <FieldError name="axisTracker" className="rw-field-error" />
+        <FieldError name="systemCapacity" className="rw-field-error" />
 
         <Label
-          name="hemisphere"
+          name="moduleType"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Hemisphere
+          Module
         </Label>
 
-        <TextField
-          name="hemisphere"
-          defaultValue={props.asset?.hemisphere}
+        <NumberField
+          name="moduleType"
+          defaultValue={props.asset?.moduleType}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true, min: 0, max: 2 }}
+        />
+
+        <FieldError name="moduleType" className="rw-field-error" />
+
+        <Label
+          name="systemLosses"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          System Losses
+        </Label>
+
+        <NumberField
+          name="systemLosses"
+          defaultValue={props.asset?.panelTilt}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
           validation={{ required: true }}
         />
 
-        <FieldError name="hemisphere" className="rw-field-error" />
+        <FieldError name="systemLosses" className="rw-field-error" />
+
+        <Label
+          name="arrayType"
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+        >
+          Axis-Tracking
+        </Label>
+
+        <NumberField
+          name="arrayType"
+          defaultValue={props.asset?.arrayType}
+          className="rw-input"
+          errorClassName="rw-input rw-input-error"
+          validation={{ required: true, min: 0, max: 4 }}
+        />
+
+        <FieldError name="arrayType" className="rw-field-error" />
 
         <Label
           name="panelTilt"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Panel tilt
+          Panel Tilt
         </Label>
 
         <NumberField
@@ -157,58 +199,22 @@ const AssetForm = (props: AssetFormProps) => {
         <FieldError name="panelTilt" className="rw-field-error" />
 
         <Label
-          name="panelType"
+          name="azimuth"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          Panel type
+          Azimuth
         </Label>
 
-        <TextField
-          name="panelType"
-          defaultValue={props.asset?.panelType}
+        <NumberField
+          name="azimuth"
+          defaultValue={props.asset?.azimuth}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
           validation={{ required: true }}
         />
 
-        <FieldError name="panelType" className="rw-field-error" />
-
-        <Label
-          name="totalDc"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Total dc
-        </Label>
-
-        <TextField
-          name="totalDc"
-          defaultValue={props.asset?.totalDc}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ valueAsNumber: true, required: true }}
-        />
-
-        <FieldError name="totalDc" className="rw-field-error" />
-
-        <Label
-          name="totalAc"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Total ac
-        </Label>
-
-        <TextField
-          name="totalAc"
-          defaultValue={props.asset?.totalAc}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ valueAsNumber: true, required: true }}
-        />
-
-        <FieldError name="totalAc" className="rw-field-error" />
+        <FieldError name="azimuth" className="rw-field-error" />
 
         <div className="rw-button-group">
           <Submit disabled={props.loading} className="rw-button rw-button-blue">
