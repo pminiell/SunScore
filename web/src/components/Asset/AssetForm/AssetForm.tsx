@@ -113,7 +113,7 @@ const AssetForm = (props: AssetFormProps) => {
           className="rw-label"
           errorClassName="rw-label rw-label-error"
         >
-          System Capacity
+          System Capacity (Nameplate Capacity in kW)
         </Label>
 
         <NumberField

@@ -13,6 +13,20 @@ interface Props {
 }
 
 const Asset = ({ asset }: Props) => {
+  const reportProps = {
+    id: asset.id,
+    assetName: asset.assetName,
+    lat: asset.lat,
+    lon: asset.lon,
+    address: asset.address,
+    systemCapacity: asset.systemCapacity,
+    moduleType: asset.moduleType,
+    systemLosses: asset.systemLosses,
+    arrayType: asset.arrayType,
+    panelTilt: asset.panelTilt,
+    azimuth: asset.azimuth,
+  }
+
   const [deleteAsset] = useMutation(DELETE_ASSET_MUTATION, {
     onCompleted: () => {
       toast.success('Asset deleted')
@@ -93,13 +107,7 @@ const Asset = ({ asset }: Props) => {
           Delete
         </button>
         <Link
-          to={routes.assetReport({
-            id: asset.id,
-            assetName: asset.assetName,
-            lat: asset.lat,
-            lon: asset.lon,
-            address: asset.address,
-          })}
+          to={routes.assetReport(reportProps)}
           className="rw-button rw-button-blue"
         >
           View Report
