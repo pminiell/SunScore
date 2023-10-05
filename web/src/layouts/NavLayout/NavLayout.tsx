@@ -11,10 +11,10 @@ const NavLayout = ({ children }: NavLayoutProps) => {
 
   return (
     <>
-      <header className="relative flex items-center justify-between bg-blue-700 px-8 py-4 text-white">
+      <header className="relative flex items-center justify-between bg-green-400 px-8 py-4 text-white">
         <h1 className="text-5xl font-semibold tracking-tight">
           <Link
-            className="text-blue-400 transition duration-100 hover:text-blue-100"
+            className="text-white transition duration-100 hover:text-green-900"
             to={routes.home()}
           >
             SunScore
@@ -24,7 +24,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
           <ul className="relative flex items-center font-light">
             <li>
               <Link
-                className="rounded px-4 py-2 transition duration-100 hover:bg-blue-600"
+                className="rounded px-4 py-2 transition duration-100 hover:bg-green-900"
                 to={routes.assets()}
               >
                 Assets
@@ -32,7 +32,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
             </li>
             <li>
               <Link
-                className="rounded px-4 py-2 transition duration-100 hover:bg-blue-600"
+                className="rounded px-4 py-2 transition duration-100 hover:bg-green-900 "
                 to={routes.home()}
               >
                 Contact
@@ -41,27 +41,35 @@ const NavLayout = ({ children }: NavLayoutProps) => {
             <li>
               {isAuthenticated ? (
                 <div>
-                  <button type="button" onClick={logOut} className="px-4 py-2">
+                  <button
+                    type="button"
+                    onClick={logOut}
+                    className="m-4 rounded bg-white px-4 py-2 font-bold text-slate-800 shadow-lg shadow-green-800 hover:bg-green-800 hover:text-white"
+                  >
                     Logout
                   </button>
                 </div>
               ) : (
-                <Link to={routes.login()} className="px-4 py-2">
+                <Link
+                  to={routes.login()}
+                  className="m-4 rounded bg-white px-4 py-2 font-bold text-slate-800 shadow-lg shadow-green-800 hover:bg-green-800 hover:text-white"
+                >
                   Login
                 </Link>
               )}
             </li>
           </ul>
           {isAuthenticated && (
-            <div className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300">
-              {currentUser.email}
+            <div className="absolute bottom-1 right-0 mr-12 text-xs text-slate-100">
+              Logged in as:{' '}
+              <span className="font-semibold text-slate-300">
+                {currentUser.email}
+              </span>
             </div>
           )}
         </nav>
       </header>
-      <main className="mx-auto max-w-4xl rounded-b bg-white p-12 shadow">
-        {children}
-      </main>
+      <main>{children}</main>
     </>
   )
 }

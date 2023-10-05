@@ -51,7 +51,7 @@ const PvWattReport = ({ pvWatt }) => {
           </tr>
         </thead>
         <tbody>
-          {pvWatt.ac_monthly.map((month, index) => (
+          {pvWatt.ac_monthly.map((month, index: number) => (
             <tr key={index}>
               <td className="text-center font-semibold text-zinc-900">
                 {monthNames[index]}

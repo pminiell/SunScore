@@ -11,3 +11,7 @@
 /**
  * END --- SETUP TAILWINDCSS EDIT
  */
+@font-face {
+  font-family: 'Clash Grotesk';
+  src: url("/fonts/ClashGrotesk-Regular.woff2") format("woff2"), url("/fonts/ClashGrotesk-Regular.woff") format("woff");
+}
