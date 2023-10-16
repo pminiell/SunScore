@@ -14,5 +14,5 @@ clone repo
 
 4. yarn rw dev to start api server and run project locally 
 
-redwood docs - [https://redwoodjs.com/docs/how-to/using-yarn#what-is-yarn ](https://redwoodjs.com/docs/index)https://redwoodjs.com/docs/index 
+redwood docs for adding packages - web workspace is frontend, api workspace is backend  - [https://redwoodjs.com/docs/how-to/using-yarn#what-is-yarn ](https://redwoodjs.com/docs/index)https://redwoodjs.com/docs/index 
 
