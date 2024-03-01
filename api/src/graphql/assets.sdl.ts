@@ -1,7 +1,7 @@
 export const schema = gql`
   type Asset {
     id: Int!
-    userId: Int
+    user: User!
     assetName: String!
     systemCapacity: Float!
     moduleType: Int!
@@ -15,12 +15,11 @@ export const schema = gql`
   }
 
   type Query {
-    assets: [Asset!]! @skipAuth
-    asset(id: Int!): Asset @skipAuth
+    assets: [Asset!]! @requireAuth
+    asset(id: Int!): Asset @requireAuth
   }
 
   input CreateAssetInput {
-    userId: Int!
     assetName: String!
     systemCapacity: Float!
     moduleType: Int!
@@ -34,7 +33,7 @@ export const schema = gql`
   }
 
   input UpdateAssetInput {
-    userId: Int!
+    id: Int!
     assetName: String!
     systemCapacity: Float!
     moduleType: Int!
@@ -48,8 +47,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    createAsset(input: CreateAssetInput!): Asset! @skipAuth
-    updateAsset(id: Int!, input: UpdateAssetInput!): Asset! @skipAuth
-    deleteAsset(id: Int!): Asset! @skipAuth
+    createAsset(input: CreateAssetInput!): Asset! @requireAuth
+    updateAsset(id: Int!, input: UpdateAssetInput!): Asset! @requireAuth
+    deleteAsset(id: Int!): Asset! @requireAuth
   }
 `

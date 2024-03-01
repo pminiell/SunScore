@@ -11,7 +11,6 @@ export const QUERY = gql`
   query EditAssetById($id: Int!) {
     asset: asset(id: $id) {
       id
-      userId
       assetName
       systemCapacity
       moduleType
@@ -22,6 +21,10 @@ export const QUERY = gql`
       azimuth
       lat
       lon
+      user
+      {
+        id
+      }
     }
   }
 `
@@ -29,7 +32,6 @@ const UPDATE_ASSET_MUTATION = gql`
   mutation UpdateAssetMutation($id: Int!, $input: UpdateAssetInput!) {
     updateAsset(id: $id, input: $input) {
       id
-      userId
       assetName
       systemCapacity
       moduleType
@@ -62,7 +64,7 @@ export const Success = ({ asset }: CellSuccessProps<EditAssetById>) => {
   })
 
   const onSave = (
-    input: Asset,
+    input: UpdateAssetInput,
     id: EditAssetById['asset']['id']
   ) => {
     updateAsset({ variables: { id, input } })

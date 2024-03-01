@@ -1,4 +1,4 @@
-import type { Asset, EditAssetById, UpdateAssetInput } from 'types/graphql'
+import type { Asset, UpdateAssetInput, CreateAssetInput } from 'types/graphql'
 
 import {
   Form,
@@ -15,17 +15,16 @@ import { getLatLngFromAddress } from 'src/utils/getLatLngFromAddress'
 
 
 interface AssetFormProps {
-  asset?: Asset
-  onSave: (data: Asset, id?: Asset['id']) => void
+  asset?: UpdateAssetInput
+  onSave: (data: UpdateAssetInput | CreateAssetInput, id?: UpdateAssetInput['id']) => void
   error: RWGqlError
   loading: boolean
 }
 const AssetForm = (props: AssetFormProps) => {
-  const onSubmit: SubmitHandler<Asset> = async (data: Asset) => {
+  const onSubmit: SubmitHandler<UpdateAssetInput | CreateAssetInput> = async (data: UpdateAssetInput | CreateAssetInput) => {
     const [lat, lon] = await getLatLngFromAddress(data.address)
     data.lat = lat
     data.lon = lon
-    data.userId = 1
     props.onSave(data, props?.asset?.id)
   }
 

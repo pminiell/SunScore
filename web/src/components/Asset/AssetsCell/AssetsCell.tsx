@@ -9,7 +9,6 @@ export const QUERY = gql`
   query FindAssets {
     assets {
       id
-      userId
       assetName
       systemCapacity
       moduleType
@@ -20,6 +19,10 @@ export const QUERY = gql`
       lat
       lon
       azimuth
+      user
+      {
+        id
+      }
     }
   }
 `
