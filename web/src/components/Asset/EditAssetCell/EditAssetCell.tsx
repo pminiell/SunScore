@@ -1,4 +1,4 @@
-import type { EditAssetById, UpdateAssetInput } from 'types/graphql'
+import type { Asset, EditAssetById, UpdateAssetInput } from 'types/graphql'
 
 import { navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -20,6 +20,8 @@ export const QUERY = gql`
       panelTilt
       address
       azimuth
+      lat
+      lon
     }
   }
 `
@@ -36,6 +38,8 @@ const UPDATE_ASSET_MUTATION = gql`
       panelTilt
       address
       azimuth
+      lat
+      lon
     }
   }
 `
@@ -58,7 +62,7 @@ export const Success = ({ asset }: CellSuccessProps<EditAssetById>) => {
   })
 
   const onSave = (
-    input: UpdateAssetInput,
+    input: Asset,
     id: EditAssetById['asset']['id']
   ) => {
     updateAsset({ variables: { id, input } })

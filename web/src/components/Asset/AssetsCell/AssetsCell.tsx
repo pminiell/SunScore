@@ -3,7 +3,7 @@ import type { FindAssets } from 'types/graphql'
 import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
-import Assets from 'src/components/Asset/Assets'
+import AssetsList from 'src/components/Asset/AssetsList/AssetsList';
 
 export const QUERY = gql`
   query FindAssets {
@@ -50,7 +50,7 @@ export const Success = ({ assets }: CellSuccessProps<FindAssets>) => {
           <div className="rw-button-icon">+</div>
         </Link>
       </header>
-      <Assets assets={assets} />
+      <AssetsList assets={assets} />
     </>
   )
 }

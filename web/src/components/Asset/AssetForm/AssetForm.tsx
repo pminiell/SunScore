@@ -1,5 +1,4 @@
-import { fetch } from '@whatwg-node/fetch'
-import type { EditAssetById, UpdateAssetInput } from 'types/graphql'
+import type { Asset, EditAssetById, UpdateAssetInput } from 'types/graphql'
 
 import {
   Form,
@@ -9,52 +8,20 @@ import {
   TextField,
   NumberField,
   Submit,
+  SubmitHandler
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
+import { getLatLngFromAddress } from 'src/utils/getLatLngFromAddress'
 
-interface GeocodeResponse {
-  results: {
-    geometry: {
-      location: {
-        lat: number
-        lng: number
-      }
-    }
-  }[]
-}
-
-export const getLatLngFromAddress = async (
-  address: string
-): Promise<[number, number]> => {
-  const response = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      address
-    )}&key=${process.env.GOOGLE_API_KEY}`
-  )
-
-  const data: GeocodeResponse = await response.json()
-
-  const { lat, lng } = data.results[0].geometry.location
-
-  return [lat, lng]
-}
-
-type FormAsset = NonNullable<EditAssetById['asset']>
-
-interface FormAssetWithLatLng extends FormAsset {
-  lat: number
-  lon: number
-}
 
 interface AssetFormProps {
-  asset?: EditAssetById['asset']
-  onSave: (data: UpdateAssetInput, id?: FormAsset['id']) => void
+  asset?: Asset
+  onSave: (data: Asset, id?: Asset['id']) => void
   error: RWGqlError
   loading: boolean
 }
-
 const AssetForm = (props: AssetFormProps) => {
-  const onSubmit = async (data: FormAssetWithLatLng) => {
+  const onSubmit: SubmitHandler<Asset> = async (data: Asset) => {
     const [lat, lon] = await getLatLngFromAddress(data.address)
     data.lat = lat
     data.lon = lon
@@ -64,7 +31,7 @@ const AssetForm = (props: AssetFormProps) => {
 
   return (
     <div className="rw-form-wrapper">
-      <Form<FormAsset> onSubmit={onSubmit} error={props.error}>
+      <Form<Asset> onSubmit={onSubmit} error={props.error}>
         <FormError
           error={props.error}
           wrapperClassName="rw-form-error-wrapper"

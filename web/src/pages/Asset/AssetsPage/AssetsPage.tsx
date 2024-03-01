@@ -1,9 +1,9 @@
-import AssetCell from 'src/components/Asset/AssetsCell'
+import AssetsCell from 'src/components/Asset/AssetsCell'
 
 const AssetsPage = () => {
   return (
     <>
-      <AssetCell />
+      <AssetsCell />
     </>
   )
 }

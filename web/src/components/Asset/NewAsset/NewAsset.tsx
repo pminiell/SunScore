@@ -1,4 +1,4 @@
-import type { CreateAssetInput } from 'types/graphql'
+import type { Asset } from 'types/graphql'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -13,7 +13,6 @@ const CREATE_ASSET_MUTATION = gql`
     }
   }
 `
-
 const NewAsset = () => {
   const [createAsset, { loading, error }] = useMutation(CREATE_ASSET_MUTATION, {
     onCompleted: () => {
@@ -25,7 +24,7 @@ const NewAsset = () => {
     },
   })
 
-  const onSave = (input: CreateAssetInput) => {
+  const onSave = (input: Asset) => {
     createAsset({ variables: { input } })
   }
 
