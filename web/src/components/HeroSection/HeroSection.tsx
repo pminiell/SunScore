@@ -10,6 +10,7 @@ const HeroSection = () => {
           We strive to provide the best possible service to our customers and
           make their lives easier.
         </p>
+        <h1>{process.env.NREL_API_KEY}</h1>
         <button className="m-4 rounded bg-white px-4 py-2 font-bold text-slate-800 shadow-lg shadow-green-800 hover:bg-green-800 hover:text-white">
           Get Started
         </button>
