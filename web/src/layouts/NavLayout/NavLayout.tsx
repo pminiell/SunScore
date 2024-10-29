@@ -1,4 +1,4 @@
-import { Link, routes } from '@redwoodjs/router'
+import {Link, navigate, NavLink, routes} from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 
@@ -9,53 +9,62 @@ type NavLayoutProps = {
 const NavLayout = ({ children }: NavLayoutProps) => {
   const { currentUser, isAuthenticated, logOut } = useAuth()
 
+  const logOutAndRedirect = async () => {
+    await logOut()
+    navigate(routes.home())
+  }
+
   return (
     <>
       <header className="relative flex items-center justify-between bg-green-400 px-8 py-4 text-white">
         <h1 className="text-5xl font-semibold tracking-tight">
-          <Link
+          <NavLink
             className="text-white transition duration-100 hover:text-green-900"
             to={routes.home()}
+            activeClassName="text-green-900"
           >
             SunScore
-          </Link>
+          </NavLink>
         </h1>
         <nav>
           <ul className="relative flex items-center font-light">
             <li>
-              <Link
+              <NavLink
                 className="rounded px-4 py-2 transition duration-100 hover:bg-green-900"
                 to={routes.assets()}
+                activeClassName="bg-green-900"
               >
                 Assets
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 className="rounded px-4 py-2 transition duration-100 hover:bg-green-900 "
                 to={routes.home()}
+                activeClassName="bg-green-900"
               >
                 Contact
-              </Link>
+              </NavLink>
             </li>
             <li>
               {isAuthenticated ? (
                 <div>
                   <button
                     type="button"
-                    onClick={logOut}
+                    onClick={logOutAndRedirect}
                     className="m-4 rounded bg-white px-4 py-2 font-bold text-slate-800 shadow-lg shadow-green-800 hover:bg-green-800 hover:text-white"
                   >
                     Logout
                   </button>
                 </div>
               ) : (
-                <Link
+                <NavLink
                   to={routes.login()}
                   className="m-4 rounded bg-white px-4 py-2 font-bold text-slate-800 shadow-lg shadow-green-800 hover:bg-green-800 hover:text-white"
+                  activeClassName="bg-green-800"
                 >
                   Login
-                </Link>
+                </NavLink>
               )}
             </li>
           </ul>
