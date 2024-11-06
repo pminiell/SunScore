@@ -8,6 +8,7 @@ services:
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
+      - ./api/db/schema.prisma:/home/node/app/api/db/schema.prisma
     ports:
       - '8910:8910'
     depends_on:

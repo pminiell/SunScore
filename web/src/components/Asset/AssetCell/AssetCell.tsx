@@ -1,4 +1,5 @@
 import type { FindAssetById } from 'types/graphql'
+import { asset } from 'src/services/assets/assets';
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
@@ -25,7 +26,6 @@ export const QUERY = gql`
     }
   }
 `
-
 export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Asset not found</div>

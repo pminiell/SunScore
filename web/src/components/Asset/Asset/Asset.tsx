@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Asset = ({ asset }: Props) => {
-  const reportProps = {
+  const assetFields = {
     id: asset.id,
     assetName: asset.assetName,
     lat: asset.lat,
@@ -107,7 +107,7 @@ const Asset = ({ asset }: Props) => {
           Delete
         </button>
         <Link
-          to={routes.assetReport(reportProps)}
+          to={routes.assetReport(assetFields)}
           className="rw-button rw-button-blue"
         >
           View Report
