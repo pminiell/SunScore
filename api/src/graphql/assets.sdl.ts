@@ -33,7 +33,6 @@ export const schema = gql`
   }
 
   input UpdateAssetInput {
-    id: Int!
     assetName: String!
     systemCapacity: Float!
     moduleType: Int!

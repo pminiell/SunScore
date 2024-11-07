@@ -31,7 +31,6 @@ export const QUERY = gql`
 const UPDATE_ASSET_MUTATION = gql`
   mutation UpdateAssetMutation($id: Int!, $input: UpdateAssetInput!) {
     updateAsset(id: $id, input: $input) {
-      id
       assetName
       systemCapacity
       moduleType
