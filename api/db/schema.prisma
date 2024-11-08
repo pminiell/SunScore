@@ -19,7 +19,7 @@ model User {
 }
 
 model Asset {
-  id             Int    @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   userId         Int
   assetName      String
   systemCapacity Float
@@ -31,5 +31,19 @@ model Asset {
   lat            Float
   lon            Float
   azimuth        Float
-  user           User   @relation(fields: [userId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
+  assetReport    AssetReport?
+}
+
+model AssetReport {
+  id             Int     @id @default(autoincrement())
+  assetId        Int     @unique
+  acMonthly      Float[]
+  poaMonthly     Float[]
+  solradMonthly  Float[]
+  dcMonthly      Float[]
+  acAnnual       Float
+  solradAnnual   Float
+  capacityFactor Float
+  asset          Asset   @relation(fields: [assetId], references: [id])
 }

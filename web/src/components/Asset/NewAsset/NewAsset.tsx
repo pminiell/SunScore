@@ -1,4 +1,4 @@
-import type { Asset } from 'types/graphql'
+import type { Asset, AssetReport } from 'types/graphql'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -13,11 +13,13 @@ const CREATE_ASSET_MUTATION = gql`
     }
   }
 `
+
 const NewAsset = () => {
   const [createAsset, { loading, error }] = useMutation(CREATE_ASSET_MUTATION, {
     onCompleted: () => {
       toast.success('Asset created')
       navigate(routes.assets())
+      console.log()
     },
     onError: (error) => {
       toast.error(error.message)

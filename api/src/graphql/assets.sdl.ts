@@ -27,8 +27,6 @@ export const schema = gql`
     arrayType: Int!
     panelTilt: Float!
     address: String!
-    lat: Float!
-    lon: Float!
     azimuth: Float!
   }
 
@@ -40,8 +38,6 @@ export const schema = gql`
     arrayType: Int!
     panelTilt: Float!
     address: String!
-    lat: Float!
-    lon: Float!
     azimuth: Float!
   }
 

@@ -1,4 +1,6 @@
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
+import getLatLngFromAddress from 'src/services/getLatLngFromAddress'
+import { getPvWattData } from "src/services/pvwatt";
 
 import { db } from 'src/lib/db'
 
@@ -12,12 +14,14 @@ export const asset: QueryResolvers['asset'] = ({ id }) => {
   })
 }
 
-export const createAsset: MutationResolvers['createAsset'] = ({ input }) => {
+export const createAsset: MutationResolvers['createAsset'] = async ({ input }) => {
+  const { address, systemCapacity, moduleType, systemLosses, arrayType, panelTilt, azimuth } = input
+  const [lat, lon] = await getLatLngFromAddress(address)
+
   return db.asset.create({
-    data: { ...input , userId: context.currentUser.id }
+    data: { ...input, lat, lon, userId: context.currentUser.id }
   })
 }
-
 export const updateAsset: MutationResolvers['updateAsset'] = ({
   id,
   input,

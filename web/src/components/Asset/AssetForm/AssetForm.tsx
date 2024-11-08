@@ -11,7 +11,6 @@ import {
   SubmitHandler
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
-import { getLatLngFromAddress } from 'src/utils/getLatLngFromAddress'
 
 
 interface AssetFormProps {
@@ -22,9 +21,6 @@ interface AssetFormProps {
 }
 const AssetForm = (props: AssetFormProps) => {
   const onSubmit: SubmitHandler<UpdateAssetInput | CreateAssetInput> = async (data: UpdateAssetInput | CreateAssetInput) => {
-    const [lat, lon] = await getLatLngFromAddress(data.address)
-    data.lat = lat
-    data.lon = lon
     props.onSave(data, props?.asset?.id)
   }
 

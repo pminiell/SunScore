@@ -107,7 +107,7 @@ const Asset = ({ asset }: Props) => {
           Delete
         </button>
         <Link
-          to={routes.assetReport(assetFields)}
+          to={routes.assetReport({ id: asset.id })}
           className="rw-button rw-button-blue"
         >
           View Report

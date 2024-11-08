@@ -11,7 +11,7 @@ interface GeocodeResponse {
   }[]
 }
 
-export const getLatLngFromAddress = async (
+const getLatLngFromAddress = async (
   address: string
 ): Promise<[number, number]> => {
   const response = await fetch(
@@ -26,3 +26,5 @@ export const getLatLngFromAddress = async (
 
   return [lat, lng]
 }
+
+export default getLatLngFromAddress
