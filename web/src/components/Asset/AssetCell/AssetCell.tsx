@@ -1,9 +1,9 @@
-import type { FindAssetById } from 'types/graphql'
-import { asset } from 'src/services/assets/assets';
+import type { FindAssetById } from "types/graphql";
+import { asset } from "src/services/assets/assets";
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type { CellFailureProps, CellSuccessProps } from "@redwoodjs/web";
 
-import Asset from 'src/components/Asset/Asset'
+import AssetDetails from "src/components/Asset/AssetDetails";
 
 export const QUERY = gql`
   query FindAssetById($id: Int!) {
@@ -25,15 +25,15 @@ export const QUERY = gql`
       }
     }
   }
-`
-export const Loading = () => <div>Loading...</div>
+`;
+export const Loading = () => <div>Loading...</div>;
 
-export const Empty = () => <div>Asset not found</div>
+export const Empty = () => <div>Asset not found</div>;
 
 export const Failure = ({ error }: CellFailureProps) => (
   <div className="rw-cell-error">{error?.message}</div>
-)
+);
 
 export const Success = ({ asset }: CellSuccessProps<FindAssetById>) => {
-  return <Asset asset={asset} />
-}
+  return <AssetDetails asset={asset} />;
+};

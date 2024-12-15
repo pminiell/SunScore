@@ -2,7 +2,7 @@ import { BsCloudSunFill } from "react-icons/bs";
 
 const HeroSection = () => {
   return (
-    <section className="bg-yellow-100">
+    <section className="bg-yellow-100 w-full">
       <BsCloudSunFill className="mb-4 ml-4 fill-yellow-400 text-9xl " />
       <div className="">
         <h1 className="m-4 text-4xl font-bold text-slate-800">Our Mission</h1>
