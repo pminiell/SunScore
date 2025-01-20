@@ -1,4 +1,4 @@
-import type { Asset, UpdateAssetInput, CreateAssetInput } from 'types/graphql'
+import type {Asset, UpdateAssetInput, CreateAssetInput, EditAssetById} from 'types/graphql'
 
 import {
   Form,
@@ -8,20 +8,21 @@ import {
   TextField,
   NumberField,
   Submit,
-  SubmitHandler
+  SubmitHandler,
+  SelectField
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
 
 interface AssetFormProps {
-  asset?: UpdateAssetInput
-  onSave: (data: UpdateAssetInput | CreateAssetInput, id?: UpdateAssetInput['id']) => void
+  asset?: any
+  onSave: (data: UpdateAssetInput | CreateAssetInput, id?: number) => void
   error: RWGqlError
   loading: boolean
 }
 const AssetForm = (props: AssetFormProps) => {
   const onSubmit: SubmitHandler<UpdateAssetInput | CreateAssetInput> = async (data: UpdateAssetInput | CreateAssetInput) => {
-    props.onSave(data, props?.asset?.id)
+    props.onSave(data, props.asset?.id)
   }
 
   return (
@@ -96,13 +97,17 @@ const AssetForm = (props: AssetFormProps) => {
           Module
         </Label>
 
-        <NumberField
+        <SelectField
           name="moduleType"
           defaultValue={props.asset?.moduleType}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true, min: 0, max: 2 }}
-        />
+          validation={{ required: true, valueAsNumber: true }}
+        >
+          <option value={0}>Standard</option>
+          <option value={1}>Premium</option>
+          <option value={2}>Thin film</option>
+        </SelectField>
 
         <FieldError name="moduleType" className="rw-field-error" />
 
@@ -132,13 +137,19 @@ const AssetForm = (props: AssetFormProps) => {
           Axis-Tracking
         </Label>
 
-        <NumberField
+        <SelectField
           name="arrayType"
           defaultValue={props.asset?.arrayType}
           className="rw-input"
           errorClassName="rw-input rw-input-error"
-          validation={{ required: true, min: 0, max: 4 }}
-        />
+          validation={{ required: true, valueAsNumber: true }}
+        >
+          <option value={0}>Fixed - Open Rack</option>
+          <option value={1}>Fixed - Roof Mounted</option>
+          <option value={2}>1 - Axis</option>
+          <option value={3}>1 - Axis Backtracking</option>
+          <option value={4}>2 - Axis</option>
+        </SelectField>
 
         <FieldError name="arrayType" className="rw-field-error" />
 

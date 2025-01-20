@@ -19,7 +19,6 @@ const NewAsset = () => {
     onCompleted: () => {
       toast.success('Asset created')
       navigate(routes.assets())
-      console.log()
     },
     onError: (error) => {
       toast.error(error.message)

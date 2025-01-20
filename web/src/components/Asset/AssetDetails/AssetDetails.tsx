@@ -9,26 +9,36 @@ import { toast } from "@redwoodjs/web/toast";
 
 import { DELETE_ASSET_MUTATION } from "src/utils/DeleteAssetMutation";
 
-import {} from "src/lib/formatters";
+import { } from "src/lib/formatters";
 
 interface Props {
   asset: NonNullable<FindAssetById["asset"]>;
+  arrayTypeText: string;
+  moduleTypeText: string;
 }
 
-const AssetDetails = ({ asset }: Props) => {
-  const assetFields = {
-    id: asset.id,
-    assetName: asset.assetName,
-    lat: asset.lat,
-    lon: asset.lon,
-    address: asset.address,
-    systemCapacity: asset.systemCapacity,
-    moduleType: asset.moduleType,
-    systemLosses: asset.systemLosses,
-    arrayType: asset.arrayType,
-    panelTilt: asset.panelTilt,
-    azimuth: asset.azimuth,
-  };
+const AssetDetails = ({ asset, moduleTypeText, arrayTypeText }: Props) => {
+  switch (asset.moduleType) {
+    case 0:
+      moduleTypeText = "Standard";
+    case 1:
+      moduleTypeText = "Premium";
+    case 2:
+      moduleTypeText = "Thin Film";
+  }
+
+  switch (asset.arrayType) {
+    case 0:
+      arrayTypeText = "Fixed - Open Rack";
+    case 1:
+      arrayTypeText = "Fixed - Roof Mounted";
+    case 2:
+      arrayTypeText = "1- Axis";
+    case 3:
+      arrayTypeText = "1 - Axis Backtracking"
+    case 4:
+      arrayTypeText = "2 - Axis";
+  }
 
   const [deleteAsset] = useMutation(DELETE_ASSET_MUTATION, {
     onCompleted: () => {
@@ -70,7 +80,7 @@ const AssetDetails = ({ asset }: Props) => {
             </tr>
             <tr>
               <th>Axis Tracker</th>
-              <td>{asset.arrayType}</td>
+              <td>{arrayTypeText}</td>
             </tr>
             <tr>
               <th>System Capacity</th>
@@ -86,7 +96,7 @@ const AssetDetails = ({ asset }: Props) => {
             </tr>
             <tr>
               <th>Module</th>
-              <td>{asset.moduleType}</td>
+              <td>{moduleTypeText}</td>
             </tr>
             <tr>
               <th>Azimuth</th>

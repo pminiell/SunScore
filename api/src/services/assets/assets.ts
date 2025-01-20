@@ -22,12 +22,6 @@ export const createAsset: MutationResolvers["createAsset"] = async (
 ) => {
   const {
     address,
-    systemCapacity,
-    moduleType,
-    systemLosses,
-    arrayType,
-    panelTilt,
-    azimuth,
   } = input;
   const [lat, lon] = await getLatLngFromAddress(address);
 
@@ -35,12 +29,17 @@ export const createAsset: MutationResolvers["createAsset"] = async (
     data: { ...input, lat, lon, userId: context.currentUser.id },
   });
 };
-export const updateAsset: MutationResolvers["updateAsset"] = ({
+export const updateAsset: MutationResolvers["updateAsset"] = async ({
   id,
   input,
 }) => {
+  const {
+    address,
+  } = input;
+  const [lat, lon] = await getLatLngFromAddress(address);
+
   return db.asset.update({
-    data: input,
+    data: { ...input, ...input, lat, lon },
     where: { id },
   });
 };

@@ -19,8 +19,6 @@ export const QUERY = gql`
       panelTilt
       address
       azimuth
-      lat
-      lon
       user
       {
         id
@@ -39,8 +37,6 @@ const UPDATE_ASSET_MUTATION = gql`
       panelTilt
       address
       azimuth
-      lat
-      lon
     }
   }
 `

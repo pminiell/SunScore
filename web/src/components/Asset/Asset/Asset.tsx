@@ -8,19 +8,43 @@ import { Link, routes } from "@redwoodjs/router";
 import { truncate } from "src/lib/formatters";
 interface Props {
   asset: NonNullable<FindAssetById["asset"]>;
+  moduleTypeText: string;
+  arrayTypeText: string;
   onDeleteClick: (id: DeleteAssetMutationVariables["id"]) => void;
 }
 
-const Asset = ({ asset, onDeleteClick }: Props) => {
+const Asset = ({ asset, onDeleteClick, moduleTypeText, arrayTypeText }: Props) => {
+  switch (asset.moduleType) {
+    case 0:
+      moduleTypeText = "Standard";
+    case 1:
+      moduleTypeText = "Premium";
+    case 2:
+      moduleTypeText = "Thin Film";
+  }
+
+  switch (asset.arrayType) {
+    case 0:
+      arrayTypeText = "Fixed - Open Rack";
+    case 1:
+      arrayTypeText = "Fixed - Roof Mounted";
+    case 2:
+      arrayTypeText = "1- Axis";
+    case 3:
+      arrayTypeText = "1 - Axis Backtracking"
+    case 4:
+      arrayTypeText = "2 - Axis";
+  }
+
   return (
     <tr>
       <td>{truncate(asset.assetName)}</td>
       <td>{truncate(asset.address)}</td>
-      <td>{truncate(asset.arrayType)}</td>
+      <td>{arrayTypeText}</td>
       <td>{truncate(asset.systemCapacity)}</td>
       <td>{truncate(asset.systemLosses)}</td>
       <td>{truncate(asset.panelTilt)}</td>
-      <td>{truncate(asset.moduleType)}</td>
+      <td>{moduleTypeText}</td>
       <td>{truncate(asset.azimuth)}</td>
       <td>
         <nav className="rw-table-actions">
