@@ -1,4 +1,4 @@
-import {fetch} from '@whatwg-node/fetch'
+import { fetch } from '@whatwg-node/fetch'
 
 type PvWattResponse = {
   ac_monthly: number[]
@@ -11,15 +11,15 @@ type PvWattResponse = {
 }
 
 export const getPvWattData = async ({
-                                      systemCapacity,
-                                      moduleType,
-                                      systemLosses,
-                                      arrayType,
-                                      panelTilt,
-                                      azimuth,
-                                      lat,
-                                      lon,
-                                    }): Promise<PvWattResponse> => {
+  systemCapacity,
+  moduleType,
+  systemLosses,
+  arrayType,
+  panelTilt,
+  azimuth,
+  lat,
+  lon,
+}): Promise<PvWattResponse> => {
   const response = await fetch(
     `https://developer.nrel.gov/api/pvwatts/v8.json?parameters&api_key=${process.env.NREL_API_KEY}&lat=${lat}&lon=${lon}&azimuth=${azimuth}&system_capacity=${systemCapacity}&losses=${systemLosses}&array_type=${arrayType}&module_type=${moduleType}&tilt=${panelTilt}`
   )

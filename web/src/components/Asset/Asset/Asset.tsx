@@ -8,32 +8,41 @@ import { Link, routes } from "@redwoodjs/router";
 import { truncate } from "src/lib/formatters";
 interface Props {
   asset: NonNullable<FindAssetById["asset"]>;
-  moduleTypeText: string;
-  arrayTypeText: string;
   onDeleteClick: (id: DeleteAssetMutationVariables["id"]) => void;
 }
 
-const Asset = ({ asset, onDeleteClick, moduleTypeText, arrayTypeText }: Props) => {
+const Asset = ({ asset, onDeleteClick }: Props) => {
+  let moduleTypeText = "";
+  let arrayTypeText = "";
+
   switch (asset.moduleType) {
     case 0:
       moduleTypeText = "Standard";
+      break;
     case 1:
       moduleTypeText = "Premium";
+      break;
     case 2:
       moduleTypeText = "Thin Film";
+      break;
   }
 
   switch (asset.arrayType) {
     case 0:
       arrayTypeText = "Fixed - Open Rack";
+      break;
     case 1:
       arrayTypeText = "Fixed - Roof Mounted";
+      break;
     case 2:
       arrayTypeText = "1- Axis";
+      break;
     case 3:
       arrayTypeText = "1 - Axis Backtracking"
+      break;
     case 4:
       arrayTypeText = "2 - Axis";
+      break;
   }
 
   return (

@@ -21,23 +21,31 @@ const AssetDetails = ({ asset, moduleTypeText, arrayTypeText }: Props) => {
   switch (asset.moduleType) {
     case 0:
       moduleTypeText = "Standard";
+      break;
     case 1:
       moduleTypeText = "Premium";
+      break;
     case 2:
       moduleTypeText = "Thin Film";
+      break;
   }
 
   switch (asset.arrayType) {
     case 0:
       arrayTypeText = "Fixed - Open Rack";
+      break;
     case 1:
       arrayTypeText = "Fixed - Roof Mounted";
+      break;
     case 2:
       arrayTypeText = "1- Axis";
+      break;
     case 3:
       arrayTypeText = "1 - Axis Backtracking"
+      break;
     case 4:
       arrayTypeText = "2 - Axis";
+      break;
   }
 
   const [deleteAsset] = useMutation(DELETE_ASSET_MUTATION, {

@@ -1,4 +1,4 @@
-import type {Asset, UpdateAssetInput, CreateAssetInput, EditAssetById} from 'types/graphql'
+import type { Asset, UpdateAssetInput, CreateAssetInput } from 'types/graphql'
 
 import {
   Form,
