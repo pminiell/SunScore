@@ -13,7 +13,6 @@ import NavLayout from './layouts/NavLayout/NavLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/report" page={ReportPage} name="report" />
       <Set wrap={NavLayout}>
         <Route path="/assets/new" page={AssetNewAssetPage} name="newAsset" />
         <Route path="/assets/{id:Int}/edit" page={AssetEditAssetPage} name="editAsset" />

@@ -1,6 +1,5 @@
 import type { MutationResolvers, QueryResolvers } from "types/graphql";
 import getLatLngFromAddress from "src/services/getLatLngFromAddress";
-import { getPvWattData } from "src/services/pvwatt";
 
 import { db } from "src/lib/db";
 

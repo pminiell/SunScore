@@ -1,47 +1,29 @@
 export const schema = gql`
   type AssetReport {
     id: Int!
-    assetId: Int!
-    acMonthly: [Float!]!
-    poaMonthly: [Float!]!
-    solradMonthly: [Float!]!
-    dcMonthly: [Float!]!
-    acAnnual: Float!
-    solradAnnual: Float!
-    capacityFactor: Float!
-    asset: Asset!
+    assetId: Int
+    ac_monthly: [Float]
+    poa_monthly: [Float]
+    solrad_monthly: [Float]
+    dc_monthly: [Float]
+    ac_annual: Float
+    solrad_annual: Float
+    capacity_factor: Float
+    asset: Asset
   }
 
   type Query {
+    generateAssetReport(
+      systemCapacity: Float!,
+      moduleType: Int!,
+      systemLosses: Float!,
+      arrayType: Int!,
+      panelTilt: Float!,
+      azimuth: Float!,
+      lat: Float!,
+      lon: Float!,
+    ): AssetReport! @requireAuth
     assetReports: [AssetReport!]! @requireAuth
     assetReport(id: Int!): AssetReport @requireAuth
-  }
-
-  input CreateAssetReportInput {
-    assetId: Int!
-    acMonthly: [Float!]!
-    poaMonthly: [Float!]!
-    solradMonthly: [Float!]!
-    dcMonthly: [Float!]!
-    acAnnual: Float!
-    solradAnnual: Float!
-    capacityFactor: Float!
-  }
-
-  input UpdateAssetReportInput {
-    assetId: Int
-    acMonthly: [Float!]
-    poaMonthly: [Float!]
-    solradMonthly: [Float!]
-    dcMonthly: [Float!]
-    acAnnual: Float
-    solradAnnual: Float
-    capacityFactor: Float
-  }
-
-  type Mutation {
-    createAssetReport(input: CreateAssetReportInput!): AssetReport! @requireAuth
-    updateAssetReport(id: Int!, input: UpdateAssetReportInput!): AssetReport! @requireAuth
-    deleteAssetReport(id: Int!): AssetReport! @requireAuth
   }
 `

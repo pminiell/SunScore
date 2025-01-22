@@ -1,41 +1,39 @@
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
-import getLatLngFromAddress from 'src/services/getLatLngFromAddress'
-import { getPvWattData } from "src/services/pvwatt";
+import { fetch } from '@whatwg-node/fetch'
 
-import { db } from 'src/lib/db'
+type PvWattResponse = {
+  ac_monthly: number[]
+  poa_monthly: number[]
+  solrad_monthly: number[]
+  dc_monthly: number[]
+  ac_annual: number
+  solrad_annual: number
+  capacity_factor: number
+}
 
-// acAnnual: Scalars['Float'];
-// acMonthly: Array<Scalars['Float']>;
-// assetId: Scalars['Int'];
-// capacityFactor: Scalars['Float'];
-// dcMonthly: Array<Scalars['Float']>;
-// poaMonthly: Array<Scalars['Float']>;
-// solradAnnual: Scalars['Float'];
-// solradMonthly: Array<Scalars['Float']>;
-export const createAssetReport: MutationResolvers['createAssetReport'] = async ({ input }) => {
-  const { address, systemCapacity, moduleType, systemLosses, arrayType, panelTilt, azimuth } = input
-  const [lat, lon] = await getLatLngFromAddress(address)
-  const assetReportData = await getPvWattData({
-    systemCapacity,
-    moduleType,
-    systemLosses,
-    arrayType,
-    panelTilt,
-    azimuth,
-    lat,
-    lon,
-  })
+export type PvWattData = {
+  systemCapacity: number,
+  moduleType: number,
+  systemLosses: number,
+  arrayType: number,
+  panelTilt: number,
+  azimuth: number,
+  lat: number,
+  lon: number,
+}
 
-  return db.assetReport.create({
-    data: {
-      acAnnual: assetReportData.ac_annual,
-      acMonthly: assetReportData.ac_monthly,
-      poaMonthly: assetReportData.poa_monthly,
-      solradMonthly: assetReportData.solrad_monthly,
-      dcMonthly: assetReportData.dc_monthly,
-      solradAnnual: assetReportData.solrad_annual,
-      capacityFactor: assetReportData.capacity_factor,
-      assetId: input.assetId as number,
-    }
-  })
+export const generateAssetReport = async ({ systemCapacity, moduleType, systemLosses, arrayType, panelTilt, azimuth, lat, lon }: PvWattData): Promise<PvWattResponse> => {
+  const response = await fetch(
+    `https://developer.nrel.gov/api/pvwatts/v8.json?parameters&api_key=${process.env.NREL_API_KEY}&lat=${lat}&lon=${lon}&azimuth=${azimuth}&system_capacity=${systemCapacity}&losses=${systemLosses}&array_type=${arrayType}&module_type=${moduleType}&tilt=${panelTilt}`
+  )
+  const json = await response.json();
+
+  return {
+    ac_monthly: json.outputs.ac_monthly as number[],
+    poa_monthly: json.outputs.poa_monthly as number[],
+    solrad_monthly: json.outputs.solrad_monthly as number[],
+    dc_monthly: json.outputs.dc_monthly as number[],
+    ac_annual: json.outputs.ac_annual as number,
+    solrad_annual: json.outputs.solrad_annual as number,
+    capacity_factor: json.outputs.capacity_factor as number,
+  }
 }

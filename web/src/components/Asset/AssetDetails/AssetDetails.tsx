@@ -6,10 +6,12 @@ import type {
 import { Link, navigate, routes } from "@redwoodjs/router";
 import { useMutation } from "@redwoodjs/web";
 import { toast } from "@redwoodjs/web/toast";
+import ReportCell from "src/components/ReportCell/ReportCell";
 
 import { DELETE_ASSET_MUTATION } from "src/utils/DeleteAssetMutation";
 
 import { } from "src/lib/formatters";
+import {useState} from "react";
 
 interface Props {
   asset: NonNullable<FindAssetById["asset"]>;
@@ -17,7 +19,48 @@ interface Props {
   moduleTypeText: string;
 }
 
+export const QUERY = gql`
+  query GenerateReportQuery
+  ( $systemCapacity: Int!,
+    $moduleType: Int!,
+    $systemLosses: Int!,
+    $arrayType: Int!,
+    $panelTilt: Int!,
+    $azimuth: Int!,
+    $lat: Float!,
+    $lon: Float!
+  )
+  {
+    assetReport: generateAssetReport(
+      systemCapacity: $systemCapacity,
+      moduleType: $moduleType,
+      systemLosses: $systemLosses,
+      arrayType: $arrayType,
+      panelTilt: $panelTilt,
+      azimuth: $azimuth,
+      lat: $lat,
+      lon: $lon,
+    )
+    {
+      acMonthly
+      poaMonthly
+      solradMonthly
+      dcMonthly
+      acAnnual
+      solradAnnual
+      capacityFactor
+    }
+  }
+`
+
 const AssetDetails = ({ asset, moduleTypeText, arrayTypeText }: Props) => {
+  const [report, setReport] = useState(false);
+  console.log(asset);
+
+  const setReportData = () => {
+    setReport((prev) => !prev);
+  }
+
   switch (asset.moduleType) {
     case 0:
       moduleTypeText = "Standard";
@@ -127,8 +170,21 @@ const AssetDetails = ({ asset, moduleTypeText, arrayTypeText }: Props) => {
         >
           Delete
         </button>
+        <button type="button"
+                className="rw-button rw-button-icon"
+                onClick={setReportData}>Generate report</button>
+        {report ? <ReportCell
+          systemCapacity={asset.systemCapacity}
+          moduleType={asset.moduleType}
+          systemLosses={asset.systemLosses}
+          arrayType={asset.arrayType}
+          panelTilt={asset.panelTilt}
+          azimuth={asset.azimuth}
+          lat={asset.lat}
+          lon={asset.lon}
+        /> : null}
         <Link
-          to={routes.assetReport({ id: asset.id })}
+          to={routes.assetReport({ id: asset.id, azimuth: asset.azimuth })}
           className="rw-button rw-button-blue"
         >
           View Report
