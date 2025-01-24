@@ -9,6 +9,7 @@ import { truncate } from "src/lib/formatters";
 interface Props {
   asset: NonNullable<FindAssetById["asset"]>;
   onDeleteClick: (id: DeleteAssetMutationVariables["id"]) => void;
+  key: number;
 }
 
 const Asset = ({ asset, onDeleteClick }: Props) => {

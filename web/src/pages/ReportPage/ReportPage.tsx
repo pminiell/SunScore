@@ -6,8 +6,7 @@ import ReportCell from "src/components/ReportCell/ReportCell";
 
 
 const ReportPage = () => {
-  const { id, azimuth } = useParams()
-  console.log(azimuth)
+  const { id } = useParams()
 
   return (
     <>
