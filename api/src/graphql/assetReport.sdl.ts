@@ -12,16 +12,6 @@ export const schema = gql`
     asset: Asset
   }
 
-  type PvData {
-    ac_monthly: [Float]
-    poa_monthly: [Float]
-    solrad_monthly: [Float]
-    dc_monthly: [Float]
-    ac_annual: Float
-    solrad_annual: Float
-    capacity_factor: Float
-}
-
   type Query {
     generatePvData(
       systemCapacity: Float!,
@@ -37,7 +27,7 @@ export const schema = gql`
     assetReport(id: Int!): AssetReport @requireAuth
   }
 
-  input CreateAssetReportInput {
+  type PvData {
     ac_monthly: [Float]
     poa_monthly: [Float]
     solrad_monthly: [Float]
@@ -45,10 +35,22 @@ export const schema = gql`
     ac_annual: Float
     solrad_annual: Float
     capacity_factor: Float
-}
+  }
+
+  input CreateAssetReportInput {
+    assetId: Int!
+    systemCapacity: Float!,
+    moduleType: Int!,
+    systemLosses: Float!,
+    arrayType: Int!,
+    panelTilt: Float!,
+    azimuth: Float!,
+    lat: Float!,
+    lon: Float!,
+  }
 
   type Mutation {
-    createAssetReport(input: CreateAssetReportInput!, assetId: Int!): AssetReport! @requireAuth
+    createAssetReport(input: CreateAssetReportInput!): AssetReport! @requireAuth
     updateAssetReport(id: Int!, input: CreateAssetReportInput!): AssetReport! @requireAuth
     deleteAssetReport(id: Int!): AssetReport! @requireAuth
   }

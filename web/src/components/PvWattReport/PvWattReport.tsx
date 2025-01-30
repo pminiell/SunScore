@@ -42,38 +42,38 @@ const PvWattReport = ({ assetReport }) => {
       </ul>
       <table className="mb-4 w-full">
         <thead>
-        <tr>
-          <th>Month</th>
-          <th>POA Monthly</th>
-          <th>AC Monthly</th>
-          <th>Solrad Monthly</th>
-          <th>DC Monthly</th>
-        </tr>
+          <tr>
+            <th>Month</th>
+            <th>POA Monthly</th>
+            <th>AC Monthly</th>
+            <th>Solrad Monthly</th>
+            <th>DC Monthly</th>
+          </tr>
         </thead>
         <tbody>
-        {assetReport.ac_monthly.map((month, index) => (
-          <tr key={index}>
-            <td className="text-center font-semibold text-zinc-900">
-              {monthNames[index]}
-            </td>
-            <td className="text-center text-zinc-600">
-              {assetReport.poa_monthly[index].toFixed(2)}
-              <span className="text-sm text-zinc-600">{' kWh/m2'}</span>
-            </td>
-            <td className="text-center text-zinc-600">
-              {assetReport.ac_monthly[index].toFixed(2)}
-              <span className="text-sm text-zinc-600">{' kWhac'}</span>
-            </td>
-            <td className="text-center text-zinc-600">
-              {assetReport.solrad_monthly[index].toFixed(2)}
-              <span className="text-sm text-zinc-600">{' kWh/m2/day'}</span>
-            </td>
-            <td className="text-center text-zinc-600">
-              {assetReport.dc_monthly[index].toFixed(2)}
-              <span className="text-sm text-zinc-600">{' kWhdc'}</span>
-            </td>
-          </tr>
-        ))}
+          {assetReport.ac_monthly.map((month, index) => (
+            <tr key={index}>
+              <td className="text-center font-semibold text-zinc-900">
+                {monthNames[index]}
+              </td>
+              <td className="text-center text-zinc-600">
+                {assetReport.poa_monthly[index].toFixed(2)}
+                <span className="text-sm text-zinc-600">{' kWh/m2'}</span>
+              </td>
+              <td className="text-center text-zinc-600">
+                {assetReport.ac_monthly[index].toFixed(2)}
+                <span className="text-sm text-zinc-600">{' kWhac'}</span>
+              </td>
+              <td className="text-center text-zinc-600">
+                {assetReport.solrad_monthly[index].toFixed(2)}
+                <span className="text-sm text-zinc-600">{' kWh/m2/day'}</span>
+              </td>
+              <td className="text-center text-zinc-600">
+                {assetReport.dc_monthly[index].toFixed(2)}
+                <span className="text-sm text-zinc-600">{' kWhdc'}</span>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
