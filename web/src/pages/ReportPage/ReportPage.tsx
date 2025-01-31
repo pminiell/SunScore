@@ -1,8 +1,7 @@
 // import { Link, routes } from '@redwoodjs/router'
 import { Metadata, useQuery } from '@redwoodjs/web'
 import { useParams } from "@redwoodjs/router";
-import ReportCell from "src/components/ReportCell/ReportCell";
-
+import ReportCell from 'src/components/ReportCell'
 
 
 const ReportPage = () => {
@@ -12,12 +11,7 @@ const ReportPage = () => {
     <>
       <Metadata title="Report" description="Report page" />
 
-      <h1>ReportPage</h1>
-      <h1>Report for Asset: {id} </h1>
-      <p>
-        Find me in <code>./web/src/pages/ReportPage/ReportPage.tsx</code>
-      </p>
-      <ReportCell />
+      <ReportCell assetId={parseInt(id)} />
     </>
   )
 }

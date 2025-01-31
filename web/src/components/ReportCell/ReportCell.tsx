@@ -1,55 +1,21 @@
-import { PvWattData } from "src/services/assetReports/assetReport";
-import PvWattReport from "src/components/PvWattReport/PvWattReport";
-import { useMutation } from "@redwoodjs/web";
-import { useParams } from "@redwoodjs/router";
-
-type PvWattResponse = {
-  ac_monthly: number[]
-  poa_monthly: number[]
-  solrad_monthly: number[]
-  dc_monthly: number[]
-  ac_annual: number
-  solrad_annual: number
-  capacity_factor: number
-}
+import { CellSuccessProps } from "@redwoodjs/web";
+import PvWattReport from "../PvWattReport/PvWattReport";
+import { FindAssetReportById } from "types/graphql";
 
 export const QUERY = gql`
-  query GenerateReportQuery
-  ( $systemCapacity: Float!,
-    $moduleType: Int!,
-    $systemLosses: Float!,
-    $arrayType: Int!,
-    $panelTilt: Float!,
-    $azimuth: Float!,
-    $lat: Float!,
-    $lon: Float!
-  )
-  {
-    pvData: generatePvData(
-      systemCapacity: $systemCapacity,
-      moduleType: $moduleType,
-      systemLosses: $systemLosses,
-      arrayType: $arrayType,
-      panelTilt: $panelTilt,
-      azimuth: $azimuth,
-      lat: $lat,
-      lon: $lon,
-    )
-    {
-      ac_monthly
-      poa_monthly
-      solrad_monthly
-      dc_monthly
-      ac_annual
-      solrad_annual
-      capacity_factor
-    }
+  query FindAssetReportById($assetId: Int!) {
+    assetReport: assetReport(assetId: $assetId) {
+      assetId
+      acMonthly
+      poaMonthly
+      solradMonthly
+      dcMonthly
+      acAnnual
+      solradAnnual
+      capacityFactor
 }
-`
-
-
-
-
+  }
+`;
 
 export const Loading = () => <div>Loading...</div>
 
@@ -61,10 +27,7 @@ export const Failure = ({
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ pvData }) => {
-  const { id } = useParams();
-  console.log("id", id);
-  console.log("pvData", pvData);
-
-  return <PvWattReport assetReport={pvData} />;
+export const Success = ({ assetReport }: CellSuccessProps<FindAssetReportById>) => {
+  console.log(assetReport);
+  return <PvWattReport assetReport={assetReport} />;
 }

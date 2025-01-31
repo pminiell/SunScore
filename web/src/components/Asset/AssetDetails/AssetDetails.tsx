@@ -1,62 +1,55 @@
 import type {
   DeleteAssetMutationVariables,
   FindAssetById,
+  CreateAssetReportInput,
 } from "types/graphql";
 
 import { Link, navigate, routes } from "@redwoodjs/router";
 import { useMutation } from "@redwoodjs/web";
 import { toast } from "@redwoodjs/web/toast";
-import ReportCell from "src/components/ReportCell/ReportCell";
 
 import { DELETE_ASSET_MUTATION } from "src/utils/DeleteAssetMutation";
 
 import { } from "src/lib/formatters";
-import { useState } from "react";
+
+const CREATE_ASSET_REPORT_WITH_PV_DATA = gql`
+  mutation CreateAssetReport($input: CreateAssetReportInput!) {
+    createAssetReport(input: $input) {
+      id
+      assetId
+}}
+`
 
 interface Props {
   asset: NonNullable<FindAssetById["asset"]>;
 }
 
-export const QUERY = gql`
-  query GenerateReportQuery
-  ( $systemCapacity: Float!,
-    $moduleType: Int!,
-    $systemLosses: Float!,
-    $arrayType: Int!,
-    $panelTilt: Float!,
-    $azimuth: Float!,
-    $lat: Float!,
-    $lon: Float!
-  )
-  {
-    pvData: generatePvData(
-      systemCapacity: $systemCapacity,
-      moduleType: $moduleType,
-      systemLosses: $systemLosses,
-      arrayType: $arrayType,
-      panelTilt: $panelTilt,
-      azimuth: $azimuth,
-      lat: $lat,
-      lon: $lon,
-    )
-    {
-      ac_monthly
-      poa_monthly
-      solrad_monthly
-      dc_monthly
-      ac_annual
-      solrad_annual
-      capacity_factor
-    }
-  }
-`
-
 const AssetDetails = ({ asset }: Props) => {
-  const [report, setReport] = useState(false);
-  console.log(asset);
 
-  const setReportData = () => {
-    setReport((prev) => !prev);
+  const input: CreateAssetReportInput = {
+    assetId: asset.id,
+    systemCapacity: asset.systemCapacity,
+    moduleType: asset.moduleType,
+    systemLosses: asset.systemLosses,
+    arrayType: asset.arrayType,
+    panelTilt: asset.panelTilt,
+    azimuth: asset.azimuth,
+    lat: asset.lat,
+    lon: asset.lon,
+  };
+  const [createAssetReportWithPvData, { loading, error }] = useMutation(CREATE_ASSET_REPORT_WITH_PV_DATA,
+    {
+      onCompleted: () => {
+        toast.success('Asset Report created')
+        navigate(routes.assets())
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+    })
+
+  const generateAndCreateReport = async () => {
+    createAssetReportWithPvData({ variables: { input } })
   }
 
   let moduleTypeText = "";
@@ -170,22 +163,13 @@ const AssetDetails = ({ asset }: Props) => {
         >
           Delete
         </button>
-        <button type="button"
-          className="rw-button rw-button-icon"
-          onClick={setReportData}>Generate report</button>
-        {report ? <ReportCell
-          systemCapacity={asset.systemCapacity}
-          moduleType={asset.moduleType}
-          systemLosses={asset.systemLosses}
-          arrayType={asset.arrayType}
-          panelTilt={asset.panelTilt}
-          azimuth={asset.azimuth}
-          lat={asset.lat}
-          lon={asset.lon}
-          id={asset.id}
-        /> : null}
+        <button
+          type="button"
+          className="rw-button rw-button-green"
+          onClick={generateAndCreateReport}
+        >Generate Report</button>
         <Link
-          to={routes.assetReport({ id: asset.id, azimuth: asset.azimuth })}
+          to={routes.assetReport({ id: asset.id })}
           className="rw-button rw-button-blue"
         >
           View Report
