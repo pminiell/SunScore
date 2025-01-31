@@ -2,13 +2,13 @@ export const schema = gql`
   type AssetReport {
     id: Int!
     assetId: Int!
-    ac_monthly: [Float]
-    poa_monthly: [Float]
-    solrad_monthly: [Float]
-    dc_monthly: [Float]
-    ac_annual: Float
-    solrad_annual: Float
-    capacity_factor: Float
+    acMonthly: [Float]
+    poaMonthly: [Float]
+    solradMonthly: [Float]
+    dcMonthly: [Float]
+    acAnnual: Float
+    capacityFactor: Float
+    solradAnnual: Float
     asset: Asset
   }
 
@@ -24,17 +24,17 @@ export const schema = gql`
       lon: Float!,
     ): PvData! @requireAuth
     assetReports: [AssetReport!]! @requireAuth
-    assetReport(id: Int!): AssetReport @requireAuth
+    assetReport(assetId: Int!): AssetReport @requireAuth
   }
 
   type PvData {
-    ac_monthly: [Float]
-    poa_monthly: [Float]
-    solrad_monthly: [Float]
-    dc_monthly: [Float]
-    ac_annual: Float
-    solrad_annual: Float
-    capacity_factor: Float
+    acMonthly: [Float]
+    poaMonthly: [Float]
+    solradMonthly: [Float]
+    dcMonthly: [Float]
+    acAnnual: Float
+    solradAnnual: Float
+    capacityFactor: Float
   }
 
   input CreateAssetReportInput {

@@ -17,16 +17,7 @@ const CREATE_ASSET_REPORT_WITH_PV_DATA = gql`
     createAssetReport(input: $input) {
       id
       assetId
-      ac_monthly
-      poa_monthly
-      solrad_monthly
-      dc_monthly
-      ac_annual
-      solrad_annual
-      capacity_factor
-
-}
-  }
+}}
 `
 
 interface Props {
@@ -178,7 +169,7 @@ const AssetDetails = ({ asset }: Props) => {
           onClick={generateAndCreateReport}
         >Generate Report</button>
         <Link
-          to={routes.assetReport({ id: asset.id, azimuth: asset.azimuth })}
+          to={routes.assetReport({ id: asset.id })}
           className="rw-button rw-button-blue"
         >
           View Report

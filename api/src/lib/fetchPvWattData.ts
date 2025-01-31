@@ -14,13 +14,13 @@ type PvWattInput = {
 }
 
 type PvWattResponse = {
-  ac_monthly: number[]
-  poa_monthly: number[]
-  solrad_monthly: number[]
-  dc_monthly: number[]
-  ac_annual: number
-  solrad_annual: number
-  capacity_factor: number
+  acMonthly: number[]
+  poaMonthly: number[]
+  solradMonthly: number[]
+  dcMonthly: number[]
+  acAnnual: number
+  solradAnnual: number
+  capacityFactor: number
 }
 
 export const fetchPvWattData = async (input: PvWattInput): Promise<PvWattResponse> => {
@@ -29,13 +29,13 @@ export const fetchPvWattData = async (input: PvWattInput): Promise<PvWattRespons
   )
   const json = await response.json();
   return {
-    ac_monthly: json.outputs.ac_monthly as number[],
-    poa_monthly: json.outputs.poa_monthly as number[],
-    solrad_monthly: json.outputs.solrad_monthly as number[],
-    dc_monthly: json.outputs.dc_monthly as number[],
-    ac_annual: json.outputs.ac_annual as number,
-    solrad_annual: json.outputs.solrad_annual as number,
-    capacity_factor: json.outputs.capacity_factor as number,
+    acMonthly: json.outputs.ac_monthly as number[],
+    poaMonthly: json.outputs.poa_monthly as number[],
+    solradMonthly: json.outputs.solrad_monthly as number[],
+    dcMonthly: json.outputs.dc_monthly as number[],
+    acAnnual: json.outputs.ac_annual as number,
+    solradAnnual: json.outputs.solrad_annual as number,
+    capacityFactor: json.outputs.capacity_factor as number,
   }
 }
 
