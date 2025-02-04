@@ -12,6 +12,8 @@ export const schema = gql`
     lat: Float!
     lon: Float!
     azimuth: Float!
+    reportGenerated: Boolean!
+    assetReport: AssetReport
   }
 
   type Query {
@@ -39,11 +41,17 @@ export const schema = gql`
     panelTilt: Float!
     address: String!
     azimuth: Float!
+    reportGenerated: Boolean
+  }
+
+  input updateAssetReportGenerationInput {
+    reportGenerated: Boolean!
   }
 
   type Mutation {
     createAsset(input: CreateAssetInput!): Asset! @requireAuth
     updateAsset(id: Int!, input: UpdateAssetInput!): Asset! @requireAuth
+    updateAssetReportGeneration(id: Int!, input: updateAssetReportGenerationInput!): Asset! @requireAuth
     deleteAsset(id: Int!): Asset! @requireAuth
   }
 `

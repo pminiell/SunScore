@@ -5,6 +5,7 @@ import { FindAssetReportById } from "types/graphql";
 export const QUERY = gql`
   query FindAssetReportById($assetId: Int!) {
     assetReport: assetReport(assetId: $assetId) {
+      id
       assetId
       acMonthly
       poaMonthly
@@ -28,6 +29,6 @@ export const Failure = ({
 )
 
 export const Success = ({ assetReport }: CellSuccessProps<FindAssetReportById>) => {
-  console.log(assetReport);
+  console.log('assetReport', assetReport);
   return <PvWattReport assetReport={assetReport} />;
 }

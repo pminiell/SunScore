@@ -49,9 +49,20 @@ export const schema = gql`
     lon: Float!,
   }
 
+  input UpdateAssetReportInput {
+    arrayType: Int!
+    assetName: String!
+    azimuth: Float!
+    moduleType: Int!
+    panelTilt: Float!
+    systemCapacity: Float!
+    systemLosses: Float!
+    address: String!
+}
+
   type Mutation {
     createAssetReport(input: CreateAssetReportInput!): AssetReport! @requireAuth
-    updateAssetReport(id: Int!, input: CreateAssetReportInput!): AssetReport! @requireAuth
+    updateAssetReport(id: Int!, input: UpdateAssetReportInput!): AssetReport! @requireAuth
     deleteAssetReport(id: Int!): AssetReport! @requireAuth
   }
 `

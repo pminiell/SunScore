@@ -24,6 +24,7 @@ CREATE TABLE "Asset" (
     "lat" DOUBLE PRECISION NOT NULL,
     "lon" DOUBLE PRECISION NOT NULL,
     "azimuth" DOUBLE PRECISION NOT NULL,
+    "reportGenerated" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Asset_pkey" PRIMARY KEY ("id")
 );
@@ -53,4 +54,4 @@ CREATE UNIQUE INDEX "AssetReport_assetId_key" ON "AssetReport"("assetId");
 ALTER TABLE "Asset" ADD CONSTRAINT "Asset_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AssetReport" ADD CONSTRAINT "AssetReport_assetId_fkey" FOREIGN KEY ("assetId") REFERENCES "Asset"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "AssetReport" ADD CONSTRAINT "AssetReport_assetId_fkey" FOREIGN KEY ("assetId") REFERENCES "Asset"("id") ON DELETE CASCADE ON UPDATE CASCADE;
