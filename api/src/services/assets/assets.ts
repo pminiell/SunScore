@@ -13,6 +13,10 @@ export const assets: QueryResolvers["assets"] = () => {
 export const asset: QueryResolvers["asset"] = ({ id }) => {
   return db.asset.findUnique({
     where: { id, userId: context.currentUser.id },
+    include: {
+      user: true,
+      assetReport: true,
+    }
   });
 };
 
@@ -23,7 +27,6 @@ export const createAsset: MutationResolvers["createAsset"] = async (
     address,
   } = input;
   const [lat, lon] = await getLatLngFromAddress(address);
-
   return db.asset.create({
     data: { ...input, lat, lon, userId: context.currentUser.id },
   });
@@ -42,6 +45,17 @@ export const updateAsset: MutationResolvers["updateAsset"] = async ({
     where: { id },
   });
 };
+
+export const updateAssetReportGeneration: MutationResolvers["updateAssetReportGeneration"] = async ({
+  id,
+  input,
+}) => {
+  return db.asset.update({
+    data: { reportGenerated: input.reportGenerated },
+    where: { id },
+  });
+};
+
 
 export const deleteAsset: MutationResolvers["deleteAsset"] = ({ id }) => {
   return db.asset.delete({

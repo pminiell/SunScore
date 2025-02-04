@@ -1,4 +1,5 @@
 const PvWattReport = ({ assetReport }) => {
+
   const monthNames = [
     'January',
     'February',
@@ -15,7 +16,7 @@ const PvWattReport = ({ assetReport }) => {
   ]
 
   return (
-    <div>
+    <div className="p-2">
       <h2 className="mb-4 text-2xl font-bold">Simulated Outputs</h2>
       <ul className="mb-4">
         <li>

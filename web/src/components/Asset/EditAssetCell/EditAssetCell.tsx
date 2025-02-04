@@ -19,7 +19,12 @@ export const QUERY = gql`
       panelTilt
       address
       azimuth
+      reportGenerated
       user
+      {
+        id
+      }
+      assetReport
       {
         id
       }
@@ -37,8 +42,17 @@ const UPDATE_ASSET_MUTATION = gql`
       panelTilt
       address
       azimuth
+      reportGenerated
     }
   }
+`
+
+const UPDATE_ASSET_REPORT_WITH_PV_DATA = gql`
+  mutation UpdateAssetReport($id: Int!, $input: UpdateAssetReportInput!) {
+    updateAssetReport(id: $id, input: $input) {
+        id
+        assetId
+      }}
 `
 
 export const Loading = () => <div>Loading...</div>
@@ -49,7 +63,22 @@ export const Failure = ({ error }: CellFailureProps) => (
 
 export const Success = ({ asset }: CellSuccessProps<EditAssetById>) => {
   const [updateAsset, { loading, error }] = useMutation(UPDATE_ASSET_MUTATION, {
-    onCompleted: () => {
+    onCompleted: (data) => {
+      updateAssetReport({
+        variables: {
+          id: asset.assetReport.id, input: {
+            assetId: data.updateAsset.id,
+            systemCapacity: data.updateAsset.systemCapacity,
+            moduleType: data.updateAsset.moduleType,
+            systemLosses: data.updateAsset.systemLosses,
+            arrayType: data.updateAsset.arrayType,
+            panelTilt: data.updateAsset.panelTilt,
+            azimuth: data.updateAsset.azimuth,
+            address: data.updateAsset.address,
+            assetName: data.updateAsset.assetName,
+          }
+        }
+      })
       toast.success('Asset updated')
       navigate(routes.assets())
     },
@@ -57,6 +86,8 @@ export const Success = ({ asset }: CellSuccessProps<EditAssetById>) => {
       toast.error(error.message)
     },
   })
+
+  const [updateAssetReport] = useMutation(UPDATE_ASSET_REPORT_WITH_PV_DATA);
 
   const onSave = (
     input: UpdateAssetInput,

@@ -19,10 +19,15 @@ export const QUERY = gql`
       azimuth
       lat
       lon
+      reportGenerated
       user
       {
         id
       }
+      assetReport
+      {
+        id
+}
     }
   }
 `;
