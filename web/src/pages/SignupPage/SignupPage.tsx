@@ -10,7 +10,7 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
-import {Metadata, MetaTags} from '@redwoodjs/web'
+import { Metadata, MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -50,7 +50,7 @@ const SignupPage = () => {
     <>
       <Metadata title="Signup" />
 
-      <main className="rw-main">
+      <main>
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">

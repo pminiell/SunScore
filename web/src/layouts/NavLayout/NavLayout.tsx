@@ -16,12 +16,12 @@ const NavLayout = ({ children }: NavLayoutProps) => {
 
   return (
     <>
-      <header className="relative flex items-center justify-between bg-green-400 px-8 py-4 text-white">
+      <header className="h-32 relative flex items-center justify-between bg-green-400 px-8 py-4 text-white">
         <h1 className="text-5xl font-semibold tracking-tight">
           <NavLink
             className="text-white transition duration-100 hover:text-green-900"
             to={routes.home()}
-            activeClassName="text-green-900"
+            activeClassName="text-slate-900"
           >
             SunScore
           </NavLink>
@@ -32,7 +32,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
               <NavLink
                 className="rounded px-4 py-2 transition duration-100 hover:bg-green-900"
                 to={routes.assets()}
-                activeClassName="bg-green-900"
+                activeClassName="bg-green-900 rounded px-4 py-2"
               >
                 Assets
               </NavLink>
@@ -41,7 +41,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
               <NavLink
                 className="rounded px-4 py-2 transition duration-100 hover:bg-green-900 "
                 to={routes.home()}
-                activeClassName="bg-green-900"
+                activeClassName="rounded bg-green-900 px-4 py-2"
               >
                 Contact
               </NavLink>
@@ -71,16 +71,16 @@ const NavLayout = ({ children }: NavLayoutProps) => {
             </li>
           </ul>
           {isAuthenticated && (
-            <div className="absolute bottom-1 right-0 mr-12 text-xs text-slate-100">
+            <div className="absolute bottom-1 right-0 mr-12 text-xs text-slate-900">
               Logged in as:{" "}
-              <span className="font-semibold text-slate-300">
+              <span className="font-semibold text-slate-900">
                 {currentUser.email}
               </span>
             </div>
           )}
         </nav>
       </header>
-      <main className="rw-main">{children}</main>
+      <main>{children}</main>
     </>
   );
 };
