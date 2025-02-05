@@ -9,10 +9,7 @@ const Features = () => {
         <FcCollect className="m-4 bg-green-400 text-3xl" />
         <h3 className="m-2 text-xl font-semibold">Measure</h3>
         <p className="m-4  text-slate-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-          neque expedita voluptates ullam natus reprehenderit libero enim
-          sapiente corporis hic cumque incidunt perferendis maxime praesentium
-          sunt explicabo, rem vero! Voluptate.
+          Accurately measure and monitor your solar energy production with our advanced tools. Get real-time data and insights to ensure your system is performing at its best.
         </p>
       </div>
       <div className="m-2 rounded-md bg-white shadow-md shadow-green-700">
@@ -20,19 +17,14 @@ const Features = () => {
 
         <h3 className="m-2 text-xl font-semibold">Gain Insights</h3>
         <p className="m-4  text-slate-500">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam
-          dolor laborum est sed tenetur at fuga, ad atque ab nemo eaque eius
-          corporis, error iure minima quod modi, similique saepe?
+          Analyze your solar energy data to gain valuable insights. Understand your energy usage patterns and identify opportunities for optimization and savings.
         </p>
       </div>
       <div className="m-2 rounded-md bg-white shadow-md shadow-green-700">
         <LiaFileInvoiceDollarSolid className="m-4 bg-green-400 text-3xl" />
         <h3 className="m-2 text-xl font-semibold">Improve</h3>
         <p className="m-4 text-slate-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi magni
-          optio, doloremque maiores dolorum quos sit aperiam, illum obcaecati
-          odio ab quasi illo repellat nobis! Necessitatibus nisi eveniet
-          recusandae ab.
+          Implement data-driven improvements to enhance your solar energy system's efficiency. Maximize your return on investment and contribute to a sustainable future.
         </p>
       </div>
     </div>

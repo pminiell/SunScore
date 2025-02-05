@@ -29,7 +29,7 @@ const ScaffoldLayout = ({
           <div className="rw-button-icon">+</div> {buttonLabel}
         </Link>
       </header>
-      <main className="rw-main">{children}</main>
+      <main>{children}</main>
     </div>
   )
 }

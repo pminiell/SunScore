@@ -10,7 +10,7 @@ import {
   FieldError,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
-import {Metadata, MetaTags} from '@redwoodjs/web'
+import { Metadata, MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -20,7 +20,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      navigate(routes.assets())
     }
   }, [isAuthenticated])
 
@@ -48,7 +48,7 @@ const LoginPage = () => {
     <>
       <Metadata title="Login" />
 
-      <main className="rw-main">
+      <main>
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
