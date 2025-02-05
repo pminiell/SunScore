@@ -85,6 +85,7 @@ COPY --chown=node:node .yarnrc.yml .
 COPY --chown=node:node package.json .
 COPY --chown=node:node api/package.json api/
 COPY --chown=node:node yarn.lock .
+COPY --chown=node:node .yarn/releases .yarn/releases
 
 RUN mkdir -p /home/node/.yarn/berry/index
 RUN mkdir -p /home/node/.cache
@@ -123,6 +124,7 @@ COPY --chown=node:node .yarnrc.yml .
 COPY --chown=node:node package.json .
 COPY --chown=node:node web/package.json web/
 COPY --chown=node:node yarn.lock .
+COPY --chown=node:node .yarn/releases .yarn/releases
 
 RUN mkdir -p /home/node/.yarn/berry/index
 RUN mkdir -p /home/node/.cache
