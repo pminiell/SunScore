@@ -1,0 +1,71 @@
+FROM node:20-bookworm-slim as base
+
+RUN corepack enable
+
+RUN apt-get update && apt-get install -y \
+  openssl \
+  && rm -rf /var/lib/apt/lists/*
+
+USER node
+WORKDIR /home/node/app
+
+COPY --chown=node:node .yarnrc.yml .
+COPY --chown=node:node package.json .
+COPY --chown=node:node api/package.json api/
+COPY --chown=node:node yarn.lock .
+COPY --chown=node:node .yarn/releases .yarn/releases
+
+RUN mkdir -p /home/node/.yarn/berry/index
+RUN mkdir -p /home/node/.cache
+
+RUN corepack prepare yarn@stable --activate
+
+RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
+  --mount=type=cache,target=/home/node/.cache,uid=1000 \
+  CI=1 yarn install
+
+COPY --chown=node:node redwood.toml .
+COPY --chown=node:node graphql.config.js .
+COPY --chown=node:node .env.defaults .env.defaults
+
+# Build stage
+FROM base as build
+
+COPY --chown=node:node api api
+RUN yarn rw build api
+
+# Serve stage
+FROM node:20-bookworm-slim as serve
+
+RUN corepack enable
+
+RUN apt-get update && apt-get install -y \
+  openssl \
+  && rm -rf /var/lib/apt/lists/*
+
+USER node
+WORKDIR /home/node/app
+
+COPY --chown=node:node .yarnrc.yml .
+COPY --chown=node:node package.json .
+COPY --chown=node:node api/package.json api/
+COPY --chown=node:node yarn.lock .
+
+RUN mkdir -p /home/node/.yarn/berry/index
+RUN mkdir -p /home/node/.cache
+
+RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
+  --mount=type=cache,target=/home/node/.cache,uid=1000 \
+  CI=1 yarn workspaces focus api --production
+
+COPY --chown=node:node redwood.toml .
+COPY --chown=node:node graphql.config.js .
+COPY --chown=node:node .env.defaults .env.defaults
+
+COPY --chown=node:node --from=build /home/node/app/api/dist /home/node/app/api/dist
+COPY --chown=node:node --from=build /home/node/app/api/db /home/node/app/api/db
+COPY --chown=node:node --from=build /home/node/app/node_modules/.prisma /home/node/app/node_modules/.prisma
+
+ENV NODE_ENV=production
+
+CMD [ "node_modules/.bin/rw-server", "api" ]

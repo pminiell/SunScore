@@ -1,0 +1,64 @@
+FROM node:20-bookworm-slim as base
+
+RUN corepack enable
+
+USER node
+WORKDIR /home/node/app
+
+COPY --chown=node:node .yarnrc.yml .
+COPY --chown=node:node package.json .
+COPY --chown=node:node web/package.json web/
+COPY --chown=node:node yarn.lock .
+COPY --chown=node:node .yarn/releases .yarn/releases
+
+RUN mkdir -p /home/node/.yarn/berry/index
+RUN mkdir -p /home/node/.cache
+
+RUN corepack prepare yarn@stable --activate
+
+RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
+  --mount=type=cache,target=/home/node/.cache,uid=1000 \
+  CI=1 yarn install
+
+COPY --chown=node:node redwood.toml .
+COPY --chown=node:node graphql.config.js .
+COPY --chown=node:node .env.defaults .env.defaults
+
+FROM base as build
+
+ARG SESSION_SECRET
+ARG NREL_API_KEY
+ARG GOOGLE_API_KEY
+
+COPY --chown=node:node web web
+RUN yarn rw build web --no-prerender
+
+FROM node:20-bookworm-slim as serve
+
+RUN corepack enable
+
+USER node
+WORKDIR /home/node/app
+
+COPY --chown=node:node .yarnrc.yml .
+COPY --chown=node:node package.json .
+COPY --chown=node:node web/package.json web/
+COPY --chown=node:node yarn.lock .
+
+RUN mkdir -p /home/node/.yarn/berry/index
+RUN mkdir -p /home/node/.cache
+
+RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
+  --mount=type=cache,target=/home/node/.cache,uid=1000 \
+  CI=1 yarn workspaces focus web --production
+
+COPY --chown=node:node redwood.toml .
+COPY --chown=node:node graphql.config.js .
+COPY --chown=node:node .env.defaults .env.defaults
+
+COPY --chown=node:node --from=build /home/node/app/web/dist /home/node/app/web/dist
+
+ENV NODE_ENV=production \
+  API_PROXY_TARGET=http://api:8911
+
+CMD ["node_modules/.bin/rw-web-server", "--api-proxy-target", "$API_PROXY_TARGET"]
