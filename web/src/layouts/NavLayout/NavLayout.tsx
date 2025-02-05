@@ -15,35 +15,25 @@ const NavLayout = ({ children }: NavLayoutProps) => {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <header className="h-32 relative flex items-center justify-between bg-green-400 px-8 py-4 text-white">
         <h1 className="text-5xl font-semibold tracking-tight">
-          <NavLink
-            className="text-white transition duration-100 hover:text-green-900"
+          <Link
+            className="text-slate-900 transition duration-100 hover:text-green-700"
             to={routes.home()}
-            activeClassName="text-slate-900"
           >
             SunScore
-          </NavLink>
+          </Link>
         </h1>
         <nav>
           <ul className="relative flex items-center font-light">
             <li>
               <NavLink
-                className="rounded px-4 py-2 transition duration-100 hover:bg-green-900"
+                className="text-slate-900 font-bold rounded px-4 py-2 transition duration-100 hover:bg-green-900"
                 to={routes.assets()}
-                activeClassName="bg-green-900 rounded px-4 py-2"
+                activeClassName="bg-green-900 font-bold rounded px-4 py-2 text-white"
               >
                 Assets
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className="rounded px-4 py-2 transition duration-100 hover:bg-green-900 "
-                to={routes.home()}
-                activeClassName="rounded bg-green-900 px-4 py-2"
-              >
-                Contact
               </NavLink>
             </li>
             <li>
@@ -60,13 +50,12 @@ const NavLayout = ({ children }: NavLayoutProps) => {
                   </div>
                 )
                 : (
-                  <NavLink
+                  <Link
                     to={routes.login()}
                     className="m-4 rounded bg-white px-4 py-2 font-bold text-slate-800 shadow-lg shadow-green-800 hover:bg-green-800 hover:text-white"
-                    activeClassName="bg-green-800"
                   >
                     Login
-                  </NavLink>
+                  </Link>
                 )}
             </li>
           </ul>
@@ -80,8 +69,12 @@ const NavLayout = ({ children }: NavLayoutProps) => {
           )}
         </nav>
       </header>
-      <main>{children}</main>
-    </>
+      <main className="flex-grow">{children}</main>
+      <footer className="bg-green-400 text-slate-900 font-bold p-4 text-center">
+        <p>&copy; 2025 SunScore</p>
+        <a href="https://philminielly.com" rel="noopener">by: Philip Minielly</a>
+      </footer>
+    </div>
   );
 };
 

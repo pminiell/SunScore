@@ -15,40 +15,78 @@ const PvWattReport = ({ assetReport }) => {
     'December',
   ]
 
+  const outputDescriptions = {
+    acAnnual: 'Annual AC system output. (kWhac)',
+    capacityFactor: `The ratio of the system's predicted electrical output in the first year of operation to the nameplate output, which is equivalent to the quantity of energy the system would generate if it operated at its nameplate capacity for every hour of the year. (AC-to-DC)`,
+    solradAnnual: 'Annual solar radiation values. (kWh/m2/day)',
+    poaMonthly: `Monthly plane of array irradiance values. (kWh/m2)`,
+    acMonthly: 'Monthly AC system output. (kWhac)',
+    dcMonthly: 'Monthly DC system output. (kWhdc)',
+    solradMonthly: 'Monthly solar radiation values. (kWh/m2/day)',
+  }
   return (
     <div className="p-2">
-      <h2 className="mb-4 text-2xl font-bold">Simulated Outputs</h2>
-      <ul className="mb-4">
+      <h2 className="m-4 text-2xl font-bold">Simulated Outputs</h2>
+      <ul className="m-4">
         <li>
-          Annual AC:{' '}
-          <span className="font-bold text-zinc-800">
-            {assetReport.acAnnual.toFixed(2)}
-          </span>
-          {' kWhac'}
+          <details class="border border-transparent open:border-black/10 open:bg-green-100 ..." >
+            <summary class="text-lg leading-6 font-semibold text-slate-900 select-none">Annual AC: {assetReport.acAnnual.toFixed(2)} kWhac
+            </summary>
+            <div class="mt-3 text-m leading-6 text-slate-900">
+              <p>{outputDescriptions.acAnnual}</p>
+            </div>
+          </details>
         </li>
         <li>
-          Capacity Factor:{' '}
-          <span className="font-bold text-zinc-800">
-            {assetReport.capacityFactor.toFixed(2)}
-          </span>
-          {' kWhac'}
+          <details class="border border-transparent open:border-black/10 open:bg-green-100 ...">
+            <summary class="text-lg leading-6 font-semibold text-slate-900 select-none">Solrad Annual: {assetReport.solradAnnual.toFixed(2)} kWhac
+            </summary>
+            <div class="mt-3 text-m leading-6 text-slate-900">
+              <p>{outputDescriptions.solradAnnual}</p>
+            </div>
+          </details>
         </li>
         <li>
-          Annual SOLRAD:{' '}
-          <span className="font-bold text-zinc-800">
-            {assetReport.solradAnnual.toFixed(2)}
-          </span>
-          {' kWh/m2/day'}
+          <details class="border border-transparent open:border-black/10 open:bg-green-100 ...">
+            <summary class="text-lg leading-6 font-semibold text-slate-900 select-none">Capacity Factor: {assetReport.capacityFactor.toFixed(2)} kWhac
+            </summary>
+            <div class="mt-3 text-m leading-6 text-slate-900">
+              <p>{outputDescriptions.capacityFactor}</p>
+            </div>
+          </details>
         </li>
+
+
+
       </ul>
       <table className="mb-4 w-full">
         <thead>
           <tr>
             <th>Month</th>
-            <th>POA Monthly</th>
-            <th>AC Monthly</th>
-            <th>Solrad Monthly</th>
-            <th>DC Monthly</th>
+            <th className="relative group">
+              POA Monthly
+              <span className="absolute left-0 top-full mt-1 w-48 p-2 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100">
+                {outputDescriptions.poaMonthly}
+              </span>
+            </th>
+            <th className="relative group">
+              AC Monthly
+              <span className="absolute left-0 top-full mt-1 w-48 p-2 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100">
+                {outputDescriptions.acMonthly}
+              </span>
+            </th>
+            <th className="relative group">
+              Solrad Monthly
+              <span className="absolute left-0 top-full mt-1 w-48 p-2 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100">
+                {outputDescriptions.solradMonthly}
+              </span>
+            </th>
+            <th className="relative group">
+              DC Monthly
+              <span className="absolute left-0 top-full mt-1 w-48 p-2 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100">
+                {outputDescriptions.dcMonthly}
+              </span>
+            </th>
           </tr>
         </thead>
         <tbody>
