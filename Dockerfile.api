@@ -20,7 +20,7 @@ RUN mkdir -p /home/node/.cache
 
 RUN corepack prepare yarn@stable --activate
 
-RUN yarn install
+RUN CI=1 yarn install
 
 COPY --chown=node:node redwood.toml .
 COPY --chown=node:node graphql.config.js .

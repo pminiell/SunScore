@@ -28,9 +28,7 @@ RUN mkdir -p /home/node/.cache
 # Use corepack to prepare the yarn binary
 RUN corepack prepare yarn@stable --activate
 
-RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
-  --mount=type=cache,target=/home/node/.cache,uid=1000 \
-  CI=1 yarn install
+RUN CI=1 yarn install
 
 COPY --chown=node:node redwood.toml .
 COPY --chown=node:node graphql.config.js .
@@ -74,7 +72,7 @@ RUN yarn rw build web --no-prerender
 # ---------
 FROM node:20-bookworm-slim as api_serve
 
-RUN corepack enable
+RUN corepack enable && corepack prepare yarn@stable --activate
 
 RUN apt-get update && apt-get install -y \
   openssl \
@@ -91,9 +89,7 @@ COPY --chown=node:node yarn.lock .
 RUN mkdir -p /home/node/.yarn/berry/index
 RUN mkdir -p /home/node/.cache
 
-RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
-  --mount=type=cache,target=/home/node/.cache,uid=1000 \
-  CI=1 yarn workspaces focus api --production
+RUN yarn workspaces focus api --production
 
 COPY --chown=node:node redwood.toml .
 COPY --chown=node:node graphql.config.js .
@@ -131,9 +127,7 @@ COPY --chown=node:node yarn.lock .
 RUN mkdir -p /home/node/.yarn/berry/index
 RUN mkdir -p /home/node/.cache
 
-RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
-  --mount=type=cache,target=/home/node/.cache,uid=1000 \
-  CI=1 yarn workspaces focus web --production
+RUN CI=1 yarn workspaces focus web --production
 
 COPY --chown=node:node redwood.toml .
 COPY --chown=node:node graphql.config.js .
