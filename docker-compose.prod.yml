@@ -37,7 +37,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
 
   # After starting with `docker compose -f ./docker-compose.prod.yml up`,
   # use the console to run commands in the container:
