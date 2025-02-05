@@ -11,7 +11,7 @@
     openssl \
     && rm -rf /var/lib/apt/lists/*
 
-  RUN chown -R node:node /home/node
+  RUN chown -R node:node /home/node/app
   USER node
   WORKDIR /home/node/app
 
