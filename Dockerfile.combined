@@ -28,6 +28,8 @@
   RUN mkdir -p /home/node/.yarn/berry/index
   RUN mkdir -p /home/node/.cache
 
+  RUN chown -R node:node /home/node/.yarn /home/node/.cache
+
   RUN yarn install
 
   COPY --chown=node:node redwood.toml .
@@ -90,6 +92,8 @@
 
   RUN mkdir -p /home/node/.yarn/berry/index
   RUN mkdir -p /home/node/.cache
+
+  RUN chown -R node:node /home/node/.yarn /home/node/.cache
 
   RUN yarn workspaces focus --all --production
 
