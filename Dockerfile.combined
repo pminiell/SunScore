@@ -28,10 +28,7 @@ RUN mkdir -p /home/node/.cache
 # Ensure the node user has permissions for the .yarn and .cache directories
 RUN chown -R node:node /home/node/.yarn /home/node/.cache
 
-# Ensure the node user has permissions for the entire app directory
-RUN chown -R node:node /home/node/app
-
-RUN yarn install
+RUN C=1 yarn install
 
 COPY --chown=node:node redwood.toml .
 COPY --chown=node:node graphql.config.js .
@@ -79,8 +76,6 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /home/node/app
 
 # Change ownership of the app directory before switching to the node user
-RUN chown -R node:node /home/node/app
-
 USER node
 
 COPY --chown=node:node .yarnrc.yml .
