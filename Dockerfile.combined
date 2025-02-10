@@ -11,7 +11,7 @@
     openssl \
     && rm -rf /var/lib/apt/lists/*
 
-
+  RUN chown -R node:node /home/node/app
   USER node
   WORKDIR /home/node/app
 
@@ -24,9 +24,6 @@
 
   RUN mkdir -p /home/node/.yarn/berry/index
   RUN mkdir -p /home/node/.cache
-
-  RUN --chown=node:node /home/node/.yarn/berry/index
-  RUN --chown=node:node /home/node/.cache
 
   RUN yarn install
 
