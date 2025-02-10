@@ -20,12 +20,8 @@
   COPY --chown=node:node web/package.json web/
   COPY --chown=node:node yarn.lock .
 
-  RUN mkdir -p /home/node/.yarn/berry/index
-  RUN mkdir -p /home/node/.cache
 
-  RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
-    --mount=type=cache,target=/home/node/.cache,uid=1000 \
-    CI=1 yarn install
+  RUN yarn install
 
   COPY --chown=node:node redwood.toml .
   COPY --chown=node:node graphql.config.js .
@@ -47,7 +43,9 @@
   # -------------------
   FROM api_build as web_build_with_prerender
 
-  ARG CLERK_PUBLISHABLE_KEY
+  ARG SESSION_SECRET
+  ARG NREL_API_KEY
+  ARG GOOGLE_API_KEY
 
   COPY --chown=node:node web web
   RUN yarn rw build web
@@ -82,12 +80,7 @@
   COPY --chown=node:node web/package.json web/
   COPY --chown=node:node yarn.lock .
 
-  RUN mkdir -p /home/node/.yarn/berry/index
-  RUN mkdir -p /home/node/.cache
-
-  RUN --mount=type=cache,target=/home/node/.yarn/berry/cache,uid=1000 \
-    --mount=type=cache,target=/home/node/.cache,uid=1000 \
-    CI=1 yarn workspaces focus --all --production
+  RUN yarn workspaces focus --all --production
 
   COPY --chown=node:node redwood.toml .
   COPY --chown=node:node graphql.config.js .
