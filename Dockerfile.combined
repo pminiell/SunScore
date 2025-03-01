@@ -4,8 +4,11 @@ FROM node:20-bookworm-slim as base
 
 RUN corepack enable
 
+# Install optimization dependencies
 RUN apt-get update && apt-get install -y \
   openssl \
+  gzip \
+  brotli \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/node/app
@@ -41,35 +44,39 @@ COPY --chown=node:node .env.defaults .env.defaults
 # ---------
 FROM base as api_build
 
-# If your api side build relies on build-time environment variables,
-# specify them here as ARGs. (But don't put secrets in your Dockerfile!)
-#
-# ARG MY_BUILD_TIME_ENV_VAR
+# Performance optimization for Node.js
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=2048 --optimize-for-size"
 
 COPY --chown=node:node api api
 RUN yarn rw build api
 
-# web prerender build
-# -------------------
-FROM api_build as web_build_with_prerender
-
-ARG SESSION_SECRET
-ARG NREL_API_KEY
-ARG GOOGLE_API_KEY
-
-COPY --chown=node:node web web
-RUN yarn rw build web
-
 # web build
 # ---------
-FROM base as web_build
+FROM api_build as web_build
 
 ARG SESSION_SECRET
 ARG NREL_API_KEY
 ARG GOOGLE_API_KEY
 
+# Performance optimization for Node.js
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=2048 --optimize-for-size"
+
 COPY --chown=node:node web web
-RUN yarn rw build web --no-prerender
+
+# Use prerendering for better performance
+RUN yarn rw build web
+
+# Optimize and compress static assets
+RUN cd web/dist && \
+    find . -type f -name "*.js" -exec gzip -9 -k {} \; && \
+    find . -type f -name "*.css" -exec gzip -9 -k {} \; && \
+    find . -type f -name "*.js" -exec brotli -9 -k {} \; && \
+    find . -type f -name "*.css" -exec brotli -9 -k {} \;
+
+# Create a _headers file with cache settings
+RUN echo "/*\n  Cache-Control: public, max-age=3600\n\n/*.js\n  Cache-Control: public, max-age=604800, immutable\n\n/*.css\n  Cache-Control: public, max-age=604800, immutable\n\n/static/*\n  Cache-Control: public, max-age=31536000, immutable" > web/dist/_headers
 
 # api serve
 # ---------
@@ -77,6 +84,7 @@ FROM node:20-bookworm-slim as serve
 
 RUN corepack enable
 
+# Install production dependencies (keeping it minimal)
 RUN apt-get update && apt-get install -y \
   openssl \
   && rm -rf /var/lib/apt/lists/*
@@ -104,6 +112,7 @@ RUN chown -R node:node /home/node/.yarn /home/node/.cache
 # Ensure the node user has permissions for the entire app directory
 RUN chown -R node:node /home/node/app
 
+# Only install production dependencies
 RUN yarn workspaces focus --all --production
 
 COPY --chown=node:node redwood.toml .
@@ -116,22 +125,14 @@ COPY --chown=node:node --from=api_build /home/node/app/node_modules/.prisma /hom
 
 COPY --chown=node:node --from=web_build /home/node/app/web/dist /home/node/app/web/dist
 
+COPY --chown=node:node /home/node/app/nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Performance optimization environment variables
 ENV NODE_ENV=production \
-  API_PROXY_TARGET=http://localhost:$API_PORT
+    API_PROXY_TARGET=http://localhost:$API_PORT \
+    NODE_OPTIONS="--max-old-space-size=1024 --optimize-for-size" \
+    DATABASE_CONNECTION_POOL_MIN=2 \
+    DATABASE_CONNECTION_POOL_MAX=10
 
-# default api serve command
-# ---------
-# If you are using a custom server file, you must use the following
-# command to launch your server instead of the default api-server below.
-# This is important if you intend to configure GraphQL to use Realtime.
-#
-# CMD [ "./api/dist/server.js" ]
-CMD [ "sh", "-c", "node_modules/.bin/rw-server api & node_modules/.bin/rw-web-server --api-proxy-target $API_PROXY_TARGET" ]
-
-# # console
-# # -------
-# FROM base as console
-
-# # To add more packages:
-# #
-# #
+# Enhanced server startup with performance flags
+CMD [ "sh", "-c", "node --optimize-for-size --max-old-space-size=1024 node_modules/.bin/rw-server api & node --optimize-for-size --max-old-space-size=512 node_modules/.bin/rw-web-server --api-proxy-target $API_PROXY_TARGET --compress" ]
