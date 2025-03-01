@@ -48,28 +48,30 @@ const LoginPage = () => {
     <>
       <Metadata title="Login" />
 
-      <main>
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Login</h2>
+      <main className="py-8 px-4 md:px-8 flex justify-center items-center">
+        <Toaster toastOptions={{ className: 'bg-green-50 text-slate-800 border-l-4 border-green-400', duration: 6000 }} />
+        <div className="w-full max-w-md bg-white rounded-lg shadow-lg">
+          <div className="bg-green-400 rounded-t-lg px-6 py-4">
+            <header>
+              <h2 className="text-2xl font-bold text-slate-800">Login</h2>
             </header>
+          </div>
 
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
+          <div className="p-6">
+            <div>
+              <Form onSubmit={onSubmit} className="space-y-6">
+                <div>
                   <Label
                     name="username"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
+                    className="block text-sm font-medium text-slate-700 mb-1"
+                    errorClassName="block text-sm font-medium text-red-600 mb-1"
                   >
                     Username
                   </Label>
                   <TextField
                     name="username"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    errorClassName="w-full px-3 py-2 border border-red-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     ref={usernameRef}
                     validation={{
                       required: {
@@ -79,19 +81,21 @@ const LoginPage = () => {
                     }}
                   />
 
-                  <FieldError name="username" className="rw-field-error" />
+                  <FieldError name="username" className="mt-1 text-sm text-red-600" />
+                </div>
 
+                <div>
                   <Label
                     name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
+                    className="block text-sm font-medium text-slate-700 mb-1"
+                    errorClassName="block text-sm font-medium text-red-600 mb-1"
                   >
                     Password
                   </Label>
                   <PasswordField
                     name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    errorClassName="w-full px-3 py-2 border border-red-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     autoComplete="current-password"
                     validation={{
                       required: {
@@ -101,27 +105,30 @@ const LoginPage = () => {
                     }}
                   />
 
-                  <div className="rw-forgot-link">
+                  <div className="flex justify-end mt-1">
                     <Link
                       to={routes.forgotPassword()}
-                      className="rw-forgot-link"
+                      className="text-sm text-green-600 hover:text-green-800 hover:underline"
                     >
                       Forgot Password?
                     </Link>
                   </div>
 
-                  <FieldError name="password" className="rw-field-error" />
+                  <FieldError name="password" className="mt-1 text-sm text-red-600" />
+                </div>
 
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Login</Submit>
-                  </div>
-                </Form>
-              </div>
+                <div>
+                  <Submit className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white font-medium bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                    Login
+                  </Submit>
+                </div>
+              </Form>
             </div>
           </div>
-          <div className="rw-login-link">
-            <span>Don&apos;t have an account?</span>{' '}
-            <Link to={routes.signup()} className="rw-link">
+
+          <div className="bg-yellow-50 px-6 py-4 rounded-b-lg text-center">
+            <span className="text-slate-700">Don't have an account?</span>{' '}
+            <Link to={routes.signup()} className="text-green-600 hover:text-green-800 hover:underline font-medium">
               Sign up!
             </Link>
           </div>

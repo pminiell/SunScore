@@ -1,5 +1,4 @@
 import { Link, navigate, NavLink, routes } from "@redwoodjs/router";
-
 import { useAuth } from "src/auth";
 
 type NavLayoutProps = {
@@ -69,10 +68,10 @@ const NavLayout = ({ children }: NavLayoutProps) => {
           )}
         </nav>
       </header>
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow bg-yellow-100">{children}</main>
       <footer className="bg-green-400 text-slate-900 font-bold p-4 text-center">
         <p>&copy; 2025 SunScore</p>
-        <a href="https://philminielly.com" rel="noopener">by: Philip Minielly</a>
+        <a href="https://philminielly.com" className="hover:underline" rel="noopener">by: Philip Minielly</a>
       </footer>
     </div>
   );
