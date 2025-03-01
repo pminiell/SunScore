@@ -129,7 +129,7 @@ COPY --chown=node:node nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Performance optimization environment variables
 ENV NODE_ENV=production \
-    API_PROXY_TARGET=http://localhost:$API_PORT \
+    API_PROXY_TARGET=http://localhost:8911 \
     NODE_OPTIONS="--max-old-space-size=1024"  \
     DATABASE_CONNECTION_POOL_MIN=2 \
     DATABASE_CONNECTION_POOL_MAX=10
