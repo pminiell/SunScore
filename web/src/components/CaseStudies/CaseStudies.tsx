@@ -1,4 +1,3 @@
-import { BsCheckCircle } from 'react-icons/bs'
 import { FaMagnifyingGlassLocation } from 'react-icons/fa6'
 import sunScoreOutputs from './sunScoreOutputs.png'
 
