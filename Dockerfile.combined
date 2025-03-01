@@ -129,10 +129,11 @@ COPY --chown=node:node nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Performance optimization environment variables
 ENV NODE_ENV=production \
+    API_PORT=8911 \
     API_PROXY_TARGET=http://localhost:$API_PORT \
     NODE_OPTIONS="--max-old-space-size=1024"  \
     DATABASE_CONNECTION_POOL_MIN=2 \
     DATABASE_CONNECTION_POOL_MAX=10
 
 # Enhanced server startup with performance flags
-CMD [ "sh", "-c", "node --max-old-space-size=1024 node_modules/.bin/rw-server api & node --max-old-space-size=512 node_modules/.bin/rw-web-server --api-proxy-target $API_PROXY_TARGET --compress" ]
+CMD [ "sh", "-c", "node --max-old-space-size=1024 node_modules/.bin/rw-server api & node --max-old-space-size=512 node_modules/.bin/rw-web-server --api-proxy-target $API_PROXY_TARGET" ]
